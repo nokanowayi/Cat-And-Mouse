@@ -290,10 +290,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   points:
-  - {x: -2.12, y: -1.26, z: 0}
-  - {x: 2.8714337, y: -0.18172142, z: 0}
-  - {x: -0.01, y: 1.53, z: 0}
-  - {x: 2.93, y: 1.53, z: 0}
+  - {x: -6.823287, y: 1.6356179, z: 0}
+  - {x: -4.2631106, y: -1.447861, z: 0}
+  - {x: -2.10221, y: 3.6222093, z: 0}
+  - {x: 1.9759526, y: 2.6848996, z: 0}
+  - {x: 4.1685877, y: 0.55921525, z: 0}
 --- !u!4 &1178882351
 Transform:
   m_ObjectHideFlags: 0
@@ -338,12 +339,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e038e44ce9a4faa4381f94170fa2d038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnMode: 0
-  testGo: {fileID: 0}
-  enemyCount: 0
+  spawnMode: 1
+  testGo: {fileID: 5406917776871548305, guid: 3c189455fd037154896b3c7df80e6721, type: 3}
+  enemyCount: 10
   delayBtwSpawns: 0
-  minRandomeDelay: 0
-  maxRandomeDelay: 0
+  minRandomeDelay: 1
+  maxRandomeDelay: 4
 --- !u!4 &2036240531
 Transform:
   m_ObjectHideFlags: 0

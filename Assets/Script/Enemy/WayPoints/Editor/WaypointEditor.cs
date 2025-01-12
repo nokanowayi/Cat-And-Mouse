@@ -1,4 +1,4 @@
-using System.Collections;
+锘縰sing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -16,11 +16,11 @@ public class WaypointEditor : Editor
         {
             EditorGUI.BeginChangeCheck();
 
-            //创建控制点的位置
+            //鍒涘缓鎺у埗鐐圭殑浣嶇疆
             Vector3 currentWaypointPoint = WayPoints.Points[i] + WayPoints.CurrentPosition;
             Vector3 newWaypointPoint = Handles.FreeMoveHandle(currentWaypointPoint, 0.1f, new Vector3(0.2f, 0.2f, 0.2f), Handles.SphereHandleCap);
 
-            //创建控制点的顺序显示
+            //鍒涘缓鎺у埗鐐圭殑椤哄簭鏄剧ず
             GUIStyle textstyle = new GUIStyle();
             textstyle.fontSize = 15;
             textstyle.fontStyle = FontStyle.Bold;
@@ -31,7 +31,7 @@ public class WaypointEditor : Editor
             EditorGUI.EndChangeCheck();
 
 
-            //如果控制点发生变化，记录变化并且更新控制点的位置
+            //濡傛灉鎺у埗鐐瑰彂鐢熷彉鍖栵紝璁板綍鍙樺寲骞朵笖鏇存柊鎺у埗鐐圭殑浣嶇疆
             if (EditorGUI.EndChangeCheck())
             {
                 Undo.RecordObject(WayPoints, "Change Waypoint Position");
