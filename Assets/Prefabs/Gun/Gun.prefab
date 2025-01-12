@@ -99,8 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d875b25a49fbd843bfbe5515bab2205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towel: {fileID: 11400000, guid: 3ab1a2c6b63c5de4c8c290ff0a47e52b, type: 2}
   enemy: {fileID: 0}
-  rb: {fileID: -3823438361149562483}
   animator: {fileID: 0}
   direction: {x: 1, y: 0, z: 0}
   damage: 5

@@ -6,8 +6,8 @@ using UnityEngine.Pool;
 
 public class Gun : MonoBehaviour
 {
+    public TowelSO towel;
     public GameObject enemy;
-    public Rigidbody2D rb;
     public Animator animator;
     public Vector3 direction;
     public int damage;
@@ -18,6 +18,10 @@ public class Gun : MonoBehaviour
 
     private void Awake()
     {
+        speed = towel.speed;
+        damage = towel.damage;
+        speed = towel.speed;
+        waitTime = towel.bulletDisposeTime;
         waitTimeCounter = 0;
     }
 

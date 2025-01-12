@@ -15,12 +15,18 @@ public class Towel1 : Towel
     private float oneEnemyDistance;
     private float minEnemyDistance;
     public float attackRange;
-    public float waitTime;
+    public float attackInterval;
     public float waitTimeCounter;
     public bool isAttacking;
 
+    public int level;
+    public float currentHealth;
     private void Awake()
     {
+        health = towelData.maxHealth;
+        attackRange = towelData.attackRange;
+        attackInterval = towelData.attackInterval;
+        
         gunPool = new ObjectPool<GameObject>(CreatPool,GetPool,ReleasePool,DestroyPool,true,10,100);
         minEnemyDistance = attackRange+1;
     }
@@ -58,29 +64,40 @@ public class Towel1 : Towel
             {
                 GameObject[] newEnmeies = enemies.Where(x => x != nowEnemy).ToArray();
                 enemies = newEnmeies;
-            } 
+            }
         }
 
         foreach (var enemy in enemies)
         {
             oneEnemyDistance = CountDistance(enemy.transform);
-            if (oneEnemyDistance<minEnemyDistance)
+            if (oneEnemyDistance < minEnemyDistance)
             {
                 minEnemyDistance = oneEnemyDistance;
                 nowEnemy = enemy;
             }
         }
-        if (attackRange>CountDistance(nowEnemy.transform)) 
-        { 
-            Attack(); 
+
+        if (attackRange > CountDistance(nowEnemy.transform))
+        {
+            Attack();
             isAttacking = true;
         }
+
         if (isAttacking)
         {
             WaitTimeCounter();
         }
+
+        if (Input.GetMouseButtonDown(0)) // 检测鼠标左键是否按下
+        {
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            if (hit.collider != null && hit.collider.gameObject == gameObject) // 检测是否点击到当前物体
+            {
+                OnTowelClick();
+            }
+        }
     }
-    //敌人距离
+
     public float CountDistance(Transform nowEnemyTransform)
     {
         float rangeX = 0;
@@ -95,13 +112,18 @@ public class Towel1 : Towel
     public void WaitTimeCounter()
     {
         waitTimeCounter += Time.deltaTime;
-        if (waitTimeCounter>waitTime)
+        if (waitTimeCounter>attackInterval)
         {
             waitTimeCounter = 0;
             isAttacking = false;
         }
-    } 
-        
+    }
+
+    public override void OnTowelClick()
+    {
+        TowelInspector.instance.OnTowelClick(towelData,level,currentHealth);
+    }
+
     public override void Attack()
     {
         if (!isAttacking)
