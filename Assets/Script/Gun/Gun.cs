@@ -12,30 +12,41 @@ public class Gun : MonoBehaviour
     public Animator animator;
     public Vector2 direction; 
     public int speed;
+    public float waitTime;
+    public float waitTimeCounter=0;
     public ObjectPool<GameObject> pool;
-    
 
     private void Update()
     {
-        CountDirection();
+        TurnAngle();
+        WaitTimeCounter();
         Move();
     }
-
-    private void OnTriggerEnter(Collider other)
+    //子弹碰撞消失
+    private void OnTriggerEnter2D(Collider2D other)
     {
-         pool.Release(gameObject);   
+       pool.Release(gameObject); 
     }
-    
 
-    public void CountDirection()
+    //子弹自动消失时间
+    public void WaitTimeCounter()
     {
-        float rangeX = 0;
-        float rangeY = 0;
-        rangeX = -(transform.position.x-enemy.transform.position.x);
-        rangeY = -(transform.position.x-enemy.transform.position.y);
-        direction = new Vector2(rangeX,rangeY).normalized;
-        //transform.rotation = new Quaternion(0,0,Mathf.Asin(direction.y),0);
+        waitTimeCounter += Time.deltaTime;
+        if (waitTimeCounter>waitTime)
+        {
+            waitTimeCounter = 0;
+            pool.Release(gameObject);
+        }
+    } 
+    //子弹转动
+    public void TurnAngle()
+    {
+       Vector3 distance = enemy.transform.position - transform.position; 
+       float angle = (float)(Mathf.Atan2(distance.y, distance.x) * 180/Mathf.PI);
+       transform.rotation = Quaternion.Euler(0,0,angle+90);
+       direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized;
     }
+
 
     public void Move()
     {

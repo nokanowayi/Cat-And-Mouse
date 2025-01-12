@@ -17,9 +17,9 @@ public class Towel1 : Towel
 
     private void Awake()
     {
-        gunPool = new ObjectPool<GameObject>(CreatPool,GetPool,ReleasePool,DestroyPool,true,100,1000);
+        gunPool = new ObjectPool<GameObject>(CreatPool,GetPool,ReleasePool,DestroyPool,true,10,100);
     }
-
+    //对象池相关函数
     public void DestroyPool(GameObject obj)
     {
         Destroy(obj);
@@ -46,21 +46,20 @@ public class Towel1 : Towel
 
     private void Update()
     {
-        if (enemy !=null)
-        {
+        
             if (attackRange>CountRange())
             {
              Attack();
              isAttacking = true;
             }
-        }
+        
 
         if (isAttacking)
         {
             WaitTimeCounter();
         }
     }
-
+    //敌人距离
     public float CountRange()
     {
         float rangeX = 0;
@@ -71,7 +70,7 @@ public class Towel1 : Towel
         realRange = Mathf.Sqrt( rangeX * rangeX+rangeY * rangeY);
         return realRange;
     }
-
+    //攻击间隔
     public void WaitTimeCounter()
     {
         waitTimeCounter += Time.deltaTime;

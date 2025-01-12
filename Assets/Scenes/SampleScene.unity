@@ -352,7 +352,7 @@ Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 7862033437097824557, guid: d9dcce4c652932d49987ac5b581337d9, type: 3}
   m_PrefabInstance: {fileID: 7076254103576747968}
   m_PrefabAsset: {fileID: 0}
---- !u!60 &1081616555
+--- !u!60 &1081616559
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -915,7 +915,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1659013691156656377, guid: d9dcce4c652932d49987ac5b581337d9, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1081616555}
+      addedObject: {fileID: 1081616559}
   m_SourcePrefab: {fileID: 100100000, guid: d9dcce4c652932d49987ac5b581337d9, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
