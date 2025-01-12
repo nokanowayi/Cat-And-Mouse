@@ -29,7 +29,7 @@ public class Spawner : MonoBehaviour
 
     private float _spawnTimer; //出怪计时器
     private int _spawnedEnemyCount; //已经出怪数量
-    private int _enemiesRemaining; //剩余敌人数量
+    public int _enemiesRemaining; //剩余敌人数量
 
     private ObjectPooler _pooler;
     private WayPoints _waypoints;
@@ -101,7 +101,7 @@ public class Spawner : MonoBehaviour
 
 
 
-
+    //开始下一波出怪
     private IEnumerator NextWave()
     {
         yield return new WaitForSeconds(delayBtwWaves);
@@ -109,7 +109,6 @@ public class Spawner : MonoBehaviour
         _spawnedEnemyCount = 0;
         _spawnTimer = 0f;
     }
-
     private void RecordEnemyEndReached()
     {
         _enemiesRemaining--;
@@ -118,6 +117,7 @@ public class Spawner : MonoBehaviour
             StartCoroutine(NextWave());
         }
     }
+
 
     private void OnEnable()
     {
