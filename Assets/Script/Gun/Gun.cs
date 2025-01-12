@@ -7,7 +7,6 @@ using UnityEngine.Pool;
 public class Gun : MonoBehaviour
 {
     public GameObject enemy;
-    public GameObject towel;
     public Rigidbody2D rb;
     public Animator animator;
     public Vector2 direction; 
