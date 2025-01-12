@@ -18,6 +18,7 @@ public class Towel1 : Towel
     private void Awake()
     {
         gunPool = new ObjectPool<GameObject>(CreatPool,GetPool,ReleasePool,DestroyPool,true,10,100);
+        enemy = GameObject.Find("Enemy1");
     }
     //对象池相关函数
     public void DestroyPool(GameObject obj)
