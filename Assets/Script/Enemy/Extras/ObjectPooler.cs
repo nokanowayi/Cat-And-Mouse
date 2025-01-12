@@ -1,24 +1,24 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour
 {
-    [SerializeField] private GameObject prefab;//¶ÔÏó³ØÖĞµÄ¶ÔÏó
+    [SerializeField] private GameObject prefab;//å¯¹è±¡æ± ä¸­çš„å¯¹è±¡
     [SerializeField] private int poolSize = 10;
 
     private List<GameObject> _pool;
-    private GameObject _poolContainer;//¶ÔÏó³ØÈİÆ÷(·½±ã¹ÜÀíË¢ĞÂ²»Í¬ÖÖÀàµĞÈË)
+    private GameObject _poolContainer;//å¯¹è±¡æ± å®¹å™¨(æ–¹ä¾¿ç®¡ç†åˆ·æ–°ä¸åŒç§ç±»æ•Œäºº)
 
     private void Awake()
     {
-        _pool = new List<GameObject>();//³õÊ¼»¯¶ÔÏó³Ø
-        _poolContainer = new GameObject($"Pool - {prefab.name}");//´´½¨Ò»¸ö¶ÔÏó³ØÈİÆ÷
-        CreatePooler();//´´½¨¶ÔÏó³Ø(×ÜµÄµĞÈËÊıÁ¿)
+        _pool = new List<GameObject>();//åˆå§‹åŒ–å¯¹è±¡æ± 
+        _poolContainer = new GameObject($"Pool - {prefab.name}");//åˆ›å»ºä¸€ä¸ªå¯¹è±¡æ± å®¹å™¨
+        CreatePooler();//åˆ›å»ºå¯¹è±¡æ± (æ€»çš„æ•Œäººæ•°é‡)
     }
 
 
-    //´´½¨¶ÔÏó³Ø
+    //åˆ›å»ºå¯¹è±¡æ± 
     private void CreatePooler()
     {
         for (int i = 0; i < poolSize; i++)
@@ -27,15 +27,15 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
-    //´´½¨¶ÔÏóÊµÀı
+    //åˆ›å»ºå¯¹è±¡å®ä¾‹
     private GameObject CreateInsatnce() { 
         GameObject newinstance = Instantiate(prefab, transform);
-        newinstance.transform.SetParent(_poolContainer.transform);//½«¶ÔÏó·ÅÈë¶ÔÏó³ØÈİÆ÷
+        newinstance.transform.SetParent(_poolContainer.transform);//å°†å¯¹è±¡æ”¾å…¥å¯¹è±¡æ± å®¹å™¨
         newinstance.SetActive(false);
         return newinstance;
     }
 
-    //´Ó¶ÔÏó³ØÖĞ»ñÈ¡¶ÔÏó
+    //ä»å¯¹è±¡æ± ä¸­è·å–å¯¹è±¡
     public GameObject GetInstanceFromPool()
     {
         for (int i = 0; i < _pool.Count; i++)
@@ -48,6 +48,10 @@ public class ObjectPooler : MonoBehaviour
         return CreateInsatnce();
     }
 
+    public static void ReturnToPool(GameObject instance) 
+    { 
+        instance.SetActive(false);
+    }
 
 
 

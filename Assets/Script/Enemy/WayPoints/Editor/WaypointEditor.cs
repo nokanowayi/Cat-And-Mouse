@@ -18,7 +18,7 @@ public class WaypointEditor : Editor
 
             //创建控制点的位置
             Vector3 currentWaypointPoint = WayPoints.Points[i] + WayPoints.CurrentPosition;
-            Vector3 newWaypointPoint = Handles.FreeMoveHandle(currentWaypointPoint, 0.1f, new Vector3(0.2f, 0.2f, 0.2f), Handles.SphereHandleCap);
+            Vector3 newWaypointPoint = Handles.FreeMoveHandle(currentWaypointPoint, 0.3f, new Vector3(0.5f, 0.5f, 0.5f), Handles.SphereHandleCap);
 
             //创建控制点的顺序显示
             GUIStyle textstyle = new GUIStyle();

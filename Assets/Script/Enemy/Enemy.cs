@@ -5,6 +5,10 @@ using UnityEngine.Rendering;
 
 public abstract class Enemy : MonoBehaviour
 {
+
+
+    public int _currentWaypointIndex;
+
     public abstract void Move();
     public abstract void Attack();
     public abstract void Hurt();
