@@ -99,14 +99,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f97729301d90199419174eff5d0f2c23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  intialHealth: 10
+  currentHealth: 0
   _currentWaypointIndex: 0
   rb: {fileID: 0}
   anim: {fileID: 0}
   moveSpeed: 3
   direction: {x: 0, y: 0}
   spawner: {fileID: 0}
-  intialHealth: 0
-  currentHealth: 0
 --- !u!50 &7862033437097824557
 Rigidbody2D:
   serializedVersion: 4

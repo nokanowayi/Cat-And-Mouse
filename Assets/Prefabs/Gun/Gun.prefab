@@ -102,10 +102,10 @@ MonoBehaviour:
   enemy: {fileID: 0}
   rb: {fileID: -3823438361149562483}
   animator: {fileID: 0}
-  direction: {x: 1, y: 0}
+  direction: {x: 1, y: 0, z: 0}
+  damage: 5
   speed: 7
   waitTime: 2.5
-  waitTimeCounter: 0
 --- !u!50 &-3823438361149562483
 Rigidbody2D:
   serializedVersion: 4
