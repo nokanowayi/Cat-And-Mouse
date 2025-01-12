@@ -38,12 +38,16 @@ public class Gun : MonoBehaviour
     //子弹碰撞消失
     private void OnTriggerEnter2D(Collider2D other)
     {
-       GameObject enterEnemy = other.gameObject;
-       if (enterEnemy == enemy)
-       {
-           pool.Release(gameObject);
-       }
-       other.GetComponent<Enemy1>().TakeDamage(damage);
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            GameObject enterEnemy = other.gameObject; 
+            if (enterEnemy == enemy)
+            {
+                pool.Release(gameObject);
+            }
+            Debug.Log(other.gameObject.name);
+            other.GetComponent<Enemy1>().TakeDamage(damage);
+        }
     }
 
     //子弹自动消失时间
