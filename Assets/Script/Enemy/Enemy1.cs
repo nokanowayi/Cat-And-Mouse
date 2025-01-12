@@ -16,6 +16,7 @@ public class Enemy1 : Enemy
     private Towel nearestTower; // 最近的防御塔
 
     public static Action OnEndReached = null;//敌人到达终点事件
+    public static Action OnEnemyDeath = null;//敌人死亡事件
 
     public WayPoints WayPoints { get; set; }//[SerializeField] private WayPoints waypoint;
 
@@ -29,7 +30,7 @@ public class Enemy1 : Enemy
         currentHealth = intialHealth;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        spawner = GetComponent<Spawner>();
+        spawner = FindObjectOfType<Spawner>(); // 在场景中查找 Spawner 组件
     }
 
 
@@ -90,13 +91,14 @@ public class Enemy1 : Enemy
     {
         
         OnEndReached?.Invoke();
-        
+        _currentWaypointIndex = 0;
         ObjectPooler.ReturnToPool(gameObject);
     }
     public void ResetEnemy()
     {
         _currentWaypointIndex = 0;
     }
+
 
 
 
@@ -142,15 +144,15 @@ public class Enemy1 : Enemy
     /// </summary>
     public override void Hurt()
     {
-        anim.SetTrigger("Hurt");
-        TakeDamage(1);
+        //anim.SetTrigger("Hurt");
+       
     }
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
-            spawner._enemiesRemaining--;
+            
             Death();
         }
         else
@@ -168,9 +170,11 @@ public class Enemy1 : Enemy
     /// </summary>
     public override void Death()
     {
-        anim.SetTrigger("Death");
+        //anim.SetTrigger("Death");
+        OnEnemyDeath?.Invoke();
         currentHealth = intialHealth;
-        
+        _currentWaypointIndex = 0;
+
         ObjectPooler.ReturnToPool(gameObject);
     }
 }
