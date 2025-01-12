@@ -11,11 +11,7 @@ public class Enemy1 : Enemy
     public Vector2 direction;
     public Spawner spawner;
 
-    [Header("基础数值")]
-    public int intialHealth;
-    public int currentHealth;
 
-    private float attackInterval = 2f; // 攻击间隔时间
     private float attackTimer = 0f; // 攻击计时器
     private Towel nearestTower; // 最近的防御塔
 
@@ -156,6 +152,10 @@ public class Enemy1 : Enemy
         {
             spawner._enemiesRemaining--;
             Death();
+        }
+        else
+        {
+            Hurt();
         }
     }
 

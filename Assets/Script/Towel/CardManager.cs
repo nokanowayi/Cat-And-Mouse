@@ -15,6 +15,7 @@ public class CardManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 PlantCard();
+                isPlant.isDone = false;
             }
         }
     }
@@ -23,6 +24,7 @@ public class CardManager : MonoBehaviour
     public void PlantCard()
     {
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-         Instantiate(cardPrefab, pos, Quaternion.identity);
+        Vector3 cardPos = new Vector3(pos.x, pos.y, 0);
+         Instantiate(cardPrefab, cardPos, Quaternion.identity);
     }
 }

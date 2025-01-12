@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7, y: 3, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -98,12 +98,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de670a0486a246344944b4d7516ddefe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun: {fileID: 8676804090742414144, guid: 1dcad1d689599bd4ebf0958e98210bf2, type: 3}
-  enemy: {fileID: 4432072178010842222}
+  towelCodeName: 0
   towelType: 0
-  towelName: 0
+  enemies: []
+  nowEnemy: {fileID: 0}
+  gun: {fileID: 8676804090742414144, guid: 1dcad1d689599bd4ebf0958e98210bf2, type: 3}
   attackRange: 10
-  waitTime: 1.5
+  waitTime: 0.5
   waitTimeCounter: 0
   isAttacking: 0
 --- !u!50 &8897952481966971859

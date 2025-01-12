@@ -4,12 +4,16 @@ using System.Collections.Generic;
 using Unity.Profiling.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.Pool;
+using System.Linq;
 
 public class Towel1 : Towel
 {
     public ObjectPool<GameObject> gunPool;
+    public GameObject[] enemies;
+    public GameObject nowEnemy;
     public GameObject gun;
-    public GameObject enemy;
+    private float oneEnemyDistance;
+    private float minEnemyDistance;
     public float attackRange;
     public float waitTime;
     public float waitTimeCounter;
@@ -18,7 +22,7 @@ public class Towel1 : Towel
     private void Awake()
     {
         gunPool = new ObjectPool<GameObject>(CreatPool,GetPool,ReleasePool,DestroyPool,true,10,100);
-        enemy = GameObject.Find("Enemy1");
+        minEnemyDistance = attackRange+1;
     }
     //对象池相关函数
     public void DestroyPool(GameObject obj)
@@ -41,33 +45,49 @@ public class Towel1 : Towel
     {
         var obj = Instantiate(gun,transform.position,Quaternion.identity);
         obj.GetComponent<Gun>().pool = gunPool;
-        obj.GetComponent<Gun>().enemy = this.enemy;
+        obj.GetComponent<Gun>().enemy = nowEnemy;
         return obj;
     }
 
     private void Update()
     {
-        
-            if (attackRange>CountRange())
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        if (nowEnemy != null)
+        {
+            if (!nowEnemy.activeSelf)
             {
-             Attack();
-             isAttacking = true;
-            }
-        
+                GameObject[] newEnmeies = enemies.Where(x => x != nowEnemy).ToArray();
+                enemies = newEnmeies;
+            } 
+        }
 
+        foreach (var enemy in enemies)
+        {
+            oneEnemyDistance = CountDistance(enemy.transform);
+            if (oneEnemyDistance<minEnemyDistance)
+            {
+                minEnemyDistance = oneEnemyDistance;
+                nowEnemy = enemy;
+            }
+        }
+        if (attackRange>CountDistance(nowEnemy.transform)) 
+        { 
+            Attack(); 
+            isAttacking = true;
+        }
         if (isAttacking)
         {
             WaitTimeCounter();
         }
     }
     //敌人距离
-    public float CountRange()
+    public float CountDistance(Transform nowEnemyTransform)
     {
         float rangeX = 0;
         float rangeY = 0;
         float realRange = 0;
-        rangeX = transform.position.x-enemy.transform.position.x;
-        rangeY = transform.position.x-enemy.transform.position.y;
+        rangeX = transform.position.x-nowEnemyTransform.position.x;
+        rangeY = transform.position.x-nowEnemyTransform.position.y;
         realRange = Mathf.Sqrt( rangeX * rangeX+rangeY * rangeY);
         return realRange;
     }

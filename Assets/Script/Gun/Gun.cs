@@ -9,22 +9,37 @@ public class Gun : MonoBehaviour
     public GameObject enemy;
     public Rigidbody2D rb;
     public Animator animator;
-    public Vector2 direction; 
+    public Vector3 direction;
+    public int damage;
     public int speed;
     public float waitTime;
-    public float waitTimeCounter=0;
+    private float waitTimeCounter=0;
     public ObjectPool<GameObject> pool;
+
+    private void Awake()
+    {
+        waitTimeCounter = 0;
+    }
 
     private void Update()
     {
         TurnAngle();
         WaitTimeCounter();
         Move();
+        if (!enemy.activeSelf)
+        {
+            pool.Release(gameObject);
+        }
     }
     //子弹碰撞消失
     private void OnTriggerEnter2D(Collider2D other)
     {
-       pool.Release(gameObject); 
+       GameObject enterEnemy = other.gameObject;
+       if (enterEnemy == enemy)
+       {
+           pool.Release(gameObject);
+       }
+       other.GetComponent<Enemy1>().TakeDamage(damage);
     }
 
     //子弹自动消失时间
@@ -43,12 +58,12 @@ public class Gun : MonoBehaviour
        Vector3 distance = enemy.transform.position - transform.position; 
        float angle = (float)(Mathf.Atan2(distance.y, distance.x) * 180/Mathf.PI);
        transform.rotation = Quaternion.Euler(0,0,angle+90);
-       direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized;
+       direction = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle),0).normalized;
     }
 
 
     public void Move()
     {
-        rb.velocity = direction.normalized*speed;
+        transform.position += direction * speed * Time.deltaTime;
     }
 }
