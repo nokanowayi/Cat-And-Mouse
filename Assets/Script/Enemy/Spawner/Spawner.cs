@@ -11,16 +11,23 @@ public enum SpawnModes
     Random
 }
 
+[System.Serializable]
+public class WaveConfig
+{
+    public int enemyCount; // 每小波的敌人数量
+    public float delayBtwWaves; // 每一小波的间隔
+}
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] private SpawnModes spawnMode = SpawnModes.Fixed;
     [Header("出怪设置")]
-    [SerializeField] private int enemyCount = 10; //出发敌人数量
-    [SerializeField] private float delayBtwWaves; //出怪波次间隔
+    [SerializeField] private SpawnModes spawnMode = SpawnModes.Fixed;
+    //[SerializeField] private int enemyCount = 10; //每一小波次出发敌人数量
+    //[SerializeField] private float delayBtwWaves; //出怪小波次间隔
+    [SerializeField] private WaveConfig[] waveConfigs; // 所有大波次的配置
 
     [Header("Fixed Delay")]
-    [SerializeField] private float delayBtwSpawns; //出怪间隔
+    [SerializeField] private float delayBtwSpawns; //每一小波的出怪间隔
 
 
     [Header("Random Delay")]
@@ -31,20 +38,60 @@ public class Spawner : MonoBehaviour
     [SerializeField] private ObjectPooler enemyWave1;
     [SerializeField] private ObjectPooler enemyWave2;
     [SerializeField] private ObjectPooler enemyWave3;
-    private int _currentWave = 0;
+    public int _currentWave = 0;
+    //public int delayBtwAllWaves = 1; //所有波次间隔
+    public int CurrentWaveLeavedEnemies;
 
     private float _spawnTimer; //出怪计时器
     private int _spawnedEnemyCount; //已经出怪数量
     public int _enemiesRemaining; //剩余敌人数量
     
-
-    private ObjectPooler _pooler;
     private WayPoints _waypoints;
+
+
+
+    private ObjectPooler GetPooler()
+    {
+        if (_currentWave <= 1)
+        {
+            return enemyWave1;
+        }
+        else if (_currentWave == 2)
+        {
+            
+            return enemyWave2;
+        }
+        else if (_currentWave >= 3)
+        {
+            
+            return enemyWave3;
+        }
+        return null;
+    }
+
+    private ObjectPooler GetWave()
+    {
+        if (_currentWave <= 1)
+        {
+            return enemyWave2;
+        }
+        else if (_currentWave == 2)
+        {
+            return enemyWave3;
+        }
+        else if (_currentWave >= 3)
+        {
+            return enemyWave3;
+        }
+        return null;
+    }
+
+
 
     private void Start()
     {
-        _enemiesRemaining = enemyCount;
-        //_pooler = GetComponent<ObjectPooler>();
+        CurrentWaveLeavedEnemies = GetPooler().AllenemyCount;
+        _enemiesRemaining = waveConfigs[_currentWave].enemyCount;
         _spawnTimer = GetSpawnDelay();
         _waypoints = GetComponent<WayPoints>();
     }
@@ -57,21 +104,22 @@ public class Spawner : MonoBehaviour
         if (_spawnTimer < 0)
         {
             _spawnTimer = GetSpawnDelay();
-            if (_spawnedEnemyCount < enemyCount)
+            if (_spawnedEnemyCount < waveConfigs[_currentWave].enemyCount)
             {
                 SpawnEnemy();
                 _spawnedEnemyCount++;
             }
         }
-
-
+        
 
     }
 
+    
 
     //出怪
     private void SpawnEnemy()
     {
+        
         GameObject newInstance = GetPooler().GetInstanceFromPool();
         Enemy1 enemy1 = newInstance.GetComponent<Enemy1>();
         enemy1.WayPoints = _waypoints;
@@ -82,22 +130,9 @@ public class Spawner : MonoBehaviour
         newInstance.SetActive(true);
     }
 
-    private ObjectPooler GetPooler()
-    {
-        if (_currentWave <= 1)
-        {
-            return enemyWave1;
-        }
-        else if (_currentWave == 2)
-        {
-            return enemyWave2;
-        }
-        else if (_currentWave >= 3)
-        {
-            return enemyWave3;
-        }
-        return null;
-    }
+
+    
+
 
     //根据出怪模式获取出怪间隔
     private float GetSpawnDelay()
@@ -114,7 +149,6 @@ public class Spawner : MonoBehaviour
         }
         return delay;
     }
-
     //随机出怪间隔
     private float GetRandomDelay()
     {
@@ -126,16 +160,21 @@ public class Spawner : MonoBehaviour
     //开始下一波出怪
     private IEnumerator NextWave()
     {
-        yield return new WaitForSeconds(delayBtwWaves);
-        _currentWave++;
-        _enemiesRemaining = enemyCount;
+        yield return new WaitForSeconds(waveConfigs[_currentWave].delayBtwWaves);
+        if (CurrentWaveLeavedEnemies == 0)
+        {
+            _currentWave++;
+            CurrentWaveLeavedEnemies = GetWave().AllenemyCount;
+
+        }
+        _enemiesRemaining = waveConfigs[_currentWave].enemyCount;
         _spawnedEnemyCount = 0;
         _spawnTimer = 0f;
     }
     private void RecordEnemyEndReached()
     {
         _enemiesRemaining--;
-        //_pooler.AllenemyCount--;
+        CurrentWaveLeavedEnemies--;
         if (_enemiesRemaining <= 0)
         {
             StartCoroutine(NextWave());

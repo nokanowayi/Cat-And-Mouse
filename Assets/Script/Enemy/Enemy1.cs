@@ -7,7 +7,7 @@ public class Enemy1 : Enemy
 {
     public Rigidbody2D rb;
     public Animator anim;
-    public float moveSpeed = 3f;
+    public float moveSpeed = 1f;
     public Vector2 direction;
     public Spawner spawner;
 
@@ -144,7 +144,7 @@ public class Enemy1 : Enemy
     /// </summary>
     public override void Hurt()
     {
-        //anim.SetTrigger("Hurt");
+        anim.SetTrigger("Hurt");
        
     }
     public void TakeDamage(int damage)
@@ -166,11 +166,12 @@ public class Enemy1 : Enemy
 
 
     /// <summary>
+    /// <summary>
     /// 死亡
     /// </summary>
     public override void Death()
     {
-        //anim.SetTrigger("Death");
+        anim.SetTrigger("Death");
         OnEnemyDeath?.Invoke();
         currentHealth = intialHealth;
         _currentWaypointIndex = 0;
