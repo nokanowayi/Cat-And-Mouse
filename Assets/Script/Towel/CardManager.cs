@@ -9,6 +9,13 @@ public class CardManager : MonoBehaviour
     public GameObject cardPrefab;
     public List<GameObject> cards = new List<GameObject>();
     
+    public static CardManager instance;
+
+    private void Awake()
+    {
+       instance = this; 
+    }
+
     private void Update()
     {
         if (isPlant.isDone)
@@ -26,6 +33,11 @@ public class CardManager : MonoBehaviour
     {
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 cardPos = new Vector3(pos.x, pos.y, 0);
-         Instantiate(cardPrefab, cardPos, Quaternion.identity);
+        if (cardPrefab != null)
+        {
+            Instantiate(cardPrefab, cardPos, Quaternion.identity); 
+            CostManeger.instance.ChangeCost(-cardPrefab.GetComponent<Towel>().towelData.costNeeded);
+        }
+        cardPrefab = null;
     }
 }

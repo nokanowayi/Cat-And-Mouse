@@ -13,4 +13,5 @@ public class TowelSO : ScriptableObject
     public int bulletDisposeTime;
     public float attackRange;
     public Vector2 position;
+    public int costNeeded;
 }
