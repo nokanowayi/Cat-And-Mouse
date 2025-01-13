@@ -7,6 +7,7 @@ public class CardManager : MonoBehaviour
 {
     public BoolSO isPlant;
     public GameObject cardPrefab;
+    public List<GameObject> cards = new List<GameObject>();
     
     private void Update()
     {
