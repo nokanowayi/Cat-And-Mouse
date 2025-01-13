@@ -13,7 +13,7 @@ public class Gun : MonoBehaviour
     public int damage;
     public int speed;
     public float waitTime;
-    private float waitTimeCounter=0;
+    private float waitTimeCounter;
     public ObjectPool<GameObject> pool;
 
     private void Awake()
@@ -21,8 +21,7 @@ public class Gun : MonoBehaviour
         speed = towel.speed;
         damage = towel.damage;
         speed = towel.speed;
-        waitTime = towel.bulletDisposeTime;
-        waitTimeCounter = 0;
+        waitTime = towel.bulletDisposeTime;;
     }
 
     private void Update()
@@ -32,7 +31,9 @@ public class Gun : MonoBehaviour
         Move();
         if (!enemy.activeSelf)
         {
+            Debug.Log("hi");
             pool.Release(gameObject);
+            waitTimeCounter = 0;
         }
     }
     //子弹碰撞消失
@@ -45,7 +46,6 @@ public class Gun : MonoBehaviour
             {
                 pool.Release(gameObject);
             }
-            Debug.Log(other.gameObject.name);
             other.GetComponent<Enemy1>().TakeDamage(damage);
         }
     }

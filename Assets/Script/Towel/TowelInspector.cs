@@ -34,11 +34,15 @@ public class TowelInspector : MonoBehaviour
           towelData = towel;
           TowelPanel.SetActive(true);
           UpdateData();
+          CameraController.instance.TurnCameraSize(2);
+          CameraController.instance.TurnCameraPositon(towel.position);
      }
 
      public void OnExitClick()
      {
           TowelPanel.SetActive(false);
+          CameraController.instance.TurnCameraSize(5);
+          CameraController.instance.TurnBackCameraPositon();
      }
      
      private void UpdateData()

@@ -26,8 +26,8 @@ public class Towel1 : Towel
         health = towelData.maxHealth;
         attackRange = towelData.attackRange;
         attackInterval = towelData.attackInterval;
-        
-        gunPool = new ObjectPool<GameObject>(CreatPool,GetPool,ReleasePool,DestroyPool,true,10,100);
+        towelData.position = transform.position;
+        gunPool = new ObjectPool<GameObject>(CreatPool,GetPool,ReleasePool,DestroyPool,true,100,1000);
         minEnemyDistance = attackRange+1;
     }
     //对象池相关函数
@@ -38,6 +38,8 @@ public class Towel1 : Towel
 
     public void GetPool(GameObject obj)
     {
+        Debug.Log(nowEnemy.activeSelf);
+        obj.GetComponent<Gun>().enemy = nowEnemy;
         obj.transform.position = transform.position;
         obj.SetActive(true);
     }
@@ -45,13 +47,13 @@ public class Towel1 : Towel
     public void ReleasePool(GameObject obj)
     {
         obj.SetActive(false);   
+        obj.GetComponent<Gun>().enemy = null;
     }
 
     public GameObject CreatPool()
     {
         var obj = Instantiate(gun,transform.position,Quaternion.identity);
         obj.GetComponent<Gun>().pool = gunPool;
-        obj.GetComponent<Gun>().enemy = nowEnemy;
         return obj;
     }
 
@@ -60,11 +62,33 @@ public class Towel1 : Towel
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         if (nowEnemy != null)
         {
-            if (!nowEnemy.activeSelf)
+            if (nowEnemy.activeSelf)
             {
-                GameObject[] newEnmeies = enemies.Where(x => x != nowEnemy).ToArray();
-                enemies = newEnmeies;
+                if (CountDistance(nowEnemy.transform)>attackRange)
+                {
+                    nowEnemy = null;
+                    minEnemyDistance = attackRange + 1;
+                }
+
+                if (attackRange > CountDistance(nowEnemy.transform))
+                {
+                    if (!isAttacking)
+                    {
+                        Attack();
+                    }
+                    isAttacking = true;
+                }
+
+                if (isAttacking)
+                {
+                    WaitTimeCounter();
+                }
             }
+            else
+            {
+                nowEnemy = null;
+                minEnemyDistance = attackRange + 1;
+            }   
         }
 
         foreach (var enemy in enemies)
@@ -75,19 +99,12 @@ public class Towel1 : Towel
                 minEnemyDistance = oneEnemyDistance;
                 nowEnemy = enemy;
             }
+            if (!enemy.activeSelf)
+            {
+                GameObject[] newEnmeies = enemies.Where(x => x != nowEnemy).ToArray();
+                enemies = newEnmeies;
+            }
         }
-
-        if (attackRange > CountDistance(nowEnemy.transform))
-        {
-            Attack();
-            isAttacking = true;
-        }
-
-        if (isAttacking)
-        {
-            WaitTimeCounter();
-        }
-
         if (Input.GetMouseButtonDown(0)) // 检测鼠标左键是否按下
         {
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
@@ -125,11 +142,8 @@ public class Towel1 : Towel
     }
 
     public override void Attack()
-    {
-        if (!isAttacking)
-        {
-            gunPool.Get();
-        }
+    { 
+        gunPool.Get();
     }
 
     public override void Hurt()
