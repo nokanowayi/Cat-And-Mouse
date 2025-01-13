@@ -5,13 +5,15 @@ using UnityEngine;
 public class ObjectPooler : MonoBehaviour
 {
     [SerializeField] private GameObject prefab;//对象池中的对象
-    [SerializeField] private int poolSize = 10;
+    [SerializeField] private int poolSize;
+    public int AllenemyCount;//总敌人数量
 
     private List<GameObject> _pool;
     private GameObject _poolContainer;//对象池容器(方便管理刷新不同种类敌人)
 
     private void Awake()
     {
+        AllenemyCount = poolSize;
         _pool = new List<GameObject>();//初始化对象池
         _poolContainer = new GameObject($"Pool - {prefab.name}");//创建一个对象池容器
         CreatePooler();//创建对象池(总的敌人数量)

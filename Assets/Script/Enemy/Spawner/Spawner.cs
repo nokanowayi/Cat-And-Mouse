@@ -27,9 +27,16 @@ public class Spawner : MonoBehaviour
     [SerializeField] private float minRandomeDelay; //最小出怪间隔
     [SerializeField] private float maxRandomeDelay; //最大出怪间隔
 
+    [Header("所有波次")]
+    [SerializeField] private ObjectPooler enemyWave1;
+    [SerializeField] private ObjectPooler enemyWave2;
+    [SerializeField] private ObjectPooler enemyWave3;
+    private int _currentWave = 0;
+
     private float _spawnTimer; //出怪计时器
     private int _spawnedEnemyCount; //已经出怪数量
     public int _enemiesRemaining; //剩余敌人数量
+    
 
     private ObjectPooler _pooler;
     private WayPoints _waypoints;
@@ -37,7 +44,7 @@ public class Spawner : MonoBehaviour
     private void Start()
     {
         _enemiesRemaining = enemyCount;
-        _pooler = GetComponent<ObjectPooler>();
+        //_pooler = GetComponent<ObjectPooler>();
         _spawnTimer = GetSpawnDelay();
         _waypoints = GetComponent<WayPoints>();
     }
@@ -65,7 +72,7 @@ public class Spawner : MonoBehaviour
     //出怪
     private void SpawnEnemy()
     {
-        GameObject newInstance = _pooler.GetInstanceFromPool();
+        GameObject newInstance = GetPooler().GetInstanceFromPool();
         Enemy1 enemy1 = newInstance.GetComponent<Enemy1>();
         enemy1.WayPoints = _waypoints;
         enemy1.ResetEnemy();
@@ -75,7 +82,22 @@ public class Spawner : MonoBehaviour
         newInstance.SetActive(true);
     }
 
-
+    private ObjectPooler GetPooler()
+    {
+        if (_currentWave <= 1)
+        {
+            return enemyWave1;
+        }
+        else if (_currentWave == 2)
+        {
+            return enemyWave2;
+        }
+        else if (_currentWave >= 3)
+        {
+            return enemyWave3;
+        }
+        return null;
+    }
 
     //根据出怪模式获取出怪间隔
     private float GetSpawnDelay()
@@ -105,6 +127,7 @@ public class Spawner : MonoBehaviour
     private IEnumerator NextWave()
     {
         yield return new WaitForSeconds(delayBtwWaves);
+        _currentWave++;
         _enemiesRemaining = enemyCount;
         _spawnedEnemyCount = 0;
         _spawnTimer = 0f;
@@ -112,6 +135,7 @@ public class Spawner : MonoBehaviour
     private void RecordEnemyEndReached()
     {
         _enemiesRemaining--;
+        //_pooler.AllenemyCount--;
         if (_enemiesRemaining <= 0)
         {
             StartCoroutine(NextWave());
