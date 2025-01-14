@@ -31,7 +31,6 @@ public class Gun : MonoBehaviour
         Move();
         if (!enemy.activeSelf)
         {
-            Debug.Log("hi");
             pool.Release(gameObject);
             waitTimeCounter = 0;
         }

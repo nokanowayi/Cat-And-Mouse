@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Towel2 : Towel
 {
+    public BoolSO isIspector;
     public int cost;
-    public int level;
     public float currentHealth;
     public float waitTime;
     public float waitTimeCounter;
@@ -29,8 +29,16 @@ public class Towel2 : Towel
         }
     }
 
+    public override void LevelUp()
+    {
+        level++;
+        TowelInspector.instance.UpdateData();
+        Debug.Log("level up");
+    }
+
     public override void OnTowelClick()
     {
+        isIspector.isDone = true;
         TowelInspector.instance.OnTowelClick(towelData,level,currentHealth);
     }
 

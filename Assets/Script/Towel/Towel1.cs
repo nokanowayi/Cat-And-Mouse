@@ -8,6 +8,7 @@ using System.Linq;
 
 public class Towel1 : Towel
 {
+    public BoolSO isIspector;
     public ObjectPool<GameObject> gunPool;
     public GameObject[] enemies;
     public GameObject nowEnemy;
@@ -18,11 +19,10 @@ public class Towel1 : Towel
     public float attackInterval;
     public float waitTimeCounter;
     public bool isAttacking;
-
-    public int level;
     public float currentHealth;
     private void Awake()
     {
+        level = 1;
         health = towelData.maxHealth;
         attackRange = towelData.attackRange;
         attackInterval = towelData.attackInterval;
@@ -38,7 +38,7 @@ public class Towel1 : Towel
 
     public void GetPool(GameObject obj)
     {
-        Debug.Log(nowEnemy.activeSelf);
+        //Debug.Log(nowEnemy.activeSelf);
         obj.GetComponent<Gun>().enemy = nowEnemy;
         obj.transform.position = transform.position;
         obj.SetActive(true);
@@ -113,8 +113,23 @@ public class Towel1 : Towel
                 OnTowelClick();
             }
         }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 mousePosition = Input.mousePosition;
+            mousePosition.z = 10.0f;
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+            Debug.Log("World Position: " + worldPosition);
+        }
     }
 
+    public override void LevelUp()
+    {
+        level++;
+        TowelInspector.instance.level = level;
+        TowelInspector.instance.UpdateData();
+        Debug.Log("level up");
+    }
     public float CountDistance(Transform nowEnemyTransform)
     {
         float rangeX = 0;
@@ -138,6 +153,7 @@ public class Towel1 : Towel
 
     public override void OnTowelClick()
     {
+        isIspector.isDone = true;
         TowelInspector.instance.OnTowelClick(towelData,level,currentHealth);
     }
 

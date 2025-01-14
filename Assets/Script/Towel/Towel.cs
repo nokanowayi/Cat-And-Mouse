@@ -4,10 +4,12 @@ using UnityEngine;
 
 public abstract class Towel : MonoBehaviour
 {
+    public int level;
     public TowelSO towelData;
     public TowelCodeName towelCodeName;
     public TowelType towelType;
     public float health;
+    public abstract void LevelUp();
     public abstract void OnTowelClick();
     public abstract void Attack();
     public abstract void Hurt();

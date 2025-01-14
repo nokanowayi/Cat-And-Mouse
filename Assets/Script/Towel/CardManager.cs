@@ -7,7 +7,9 @@ public class CardManager : MonoBehaviour
 {
     public BoolSO isPlant;
     public GameObject cardPrefab;
+    public GameObject nowCard;
     public List<GameObject> cards = new List<GameObject>();
+    public List<GameObject> allCards = new List<GameObject>();
     
     public static CardManager instance;
 
@@ -35,8 +37,9 @@ public class CardManager : MonoBehaviour
         Vector3 cardPos = new Vector3(pos.x, pos.y, 0);
         if (cardPrefab != null)
         {
-            Instantiate(cardPrefab, cardPos, Quaternion.identity); 
+            nowCard = Instantiate(cardPrefab, cardPos, Quaternion.identity); 
             CostManeger.instance.ChangeCost(-cardPrefab.GetComponent<Towel>().towelData.costNeeded);
+            allCards.Add(nowCard);
         }
         cardPrefab = null;
     }
