@@ -175,7 +175,7 @@ public class Enemy1 : Enemy
         anim.SetTrigger("Hurt");
        
     }
-    public void TakeDamage(int damage)
+    public override void TakeDamage(float damage)
     {
         currentHealth -= damage;
         if (currentHealth <= 0)

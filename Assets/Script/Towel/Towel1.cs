@@ -8,7 +8,6 @@ using System.Linq;
 
 public class Towel1 : Towel
 {
-    public BoolSO isIspector;
     public ObjectPool<GameObject> gunPool;
     public GameObject[] enemies;
     public GameObject nowEnemy;
@@ -19,7 +18,6 @@ public class Towel1 : Towel
     public float attackInterval;
     public float waitTimeCounter;
     public bool isAttacking;
-    public float currentHealth;
     private void Awake()
     {
         level = 1;
@@ -153,7 +151,7 @@ public class Towel1 : Towel
 
     public override void OnTowelClick()
     {
-        isIspector.isDone = true;
+        isInspector.isDone = true;
         TowelInspector.instance.OnTowelClick(towelData,level,currentHealth);
     }
 

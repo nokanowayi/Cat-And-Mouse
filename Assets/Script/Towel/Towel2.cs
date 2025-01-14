@@ -7,7 +7,6 @@ public class Towel2 : Towel
 {
     public BoolSO isIspector;
     public int cost;
-    public float currentHealth;
     public float waitTime;
     public float waitTimeCounter;
 

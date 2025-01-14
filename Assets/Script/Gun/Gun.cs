@@ -10,7 +10,7 @@ public class Gun : MonoBehaviour
     public GameObject enemy;
     public Animator animator;
     public Vector3 direction;
-    public int damage;
+    public float damage;
     public int speed;
     public float waitTime;
     private float waitTimeCounter;
