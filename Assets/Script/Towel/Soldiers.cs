@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Pool;
 using System.Linq;
 
-public class Soilders : MonoBehaviour
+public class Soldiers : MonoBehaviour
 {
     public ObjectPool<GameObject> soilPool;
     private float oneEnemyDistance;

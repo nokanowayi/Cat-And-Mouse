@@ -46,7 +46,7 @@ public class Towel3 : Towel
     public GameObject CreateFunc()
     {
         var obj = Instantiate(soilder,transform.position,Quaternion.identity);
-        obj.GetComponent<Soilders>().soilPool = soilderPool;
+        obj.GetComponent<Soldiers>().soilPool = soilderPool;
         return obj;
     }
     private void Update()

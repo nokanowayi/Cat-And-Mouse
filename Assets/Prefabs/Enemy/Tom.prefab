@@ -122,10 +122,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   intialHealth: 10
   currentHealth: 0
+  moveSpeed: 2
+  damage: 5
+  attackRange: 1
   _currentWaypointIndex: 0
   rb: {fileID: 0}
   anim: {fileID: 2202292916685654261}
-  moveSpeed: 2
   direction: {x: 0, y: 0}
   spawner: {fileID: 0}
 --- !u!61 &433930641981205445

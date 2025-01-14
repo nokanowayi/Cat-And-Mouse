@@ -8,6 +8,9 @@ public abstract class Enemy : MonoBehaviour
     [Header("基础数值")]
     public float intialHealth;
     public float currentHealth;
+    public float moveSpeed;
+    public float damage;
+    public float attackRange; // 攻击范围
 
     protected float attackInterval = 1f; // 攻击间隔时间
 
@@ -15,7 +18,7 @@ public abstract class Enemy : MonoBehaviour
 
     public abstract void TakeDamage(float damage);
     public abstract void Move();
-    public abstract void Attack();
+    public abstract void Attack(Soldiers soldiers);
     public abstract void Hurt();
     public abstract void Death();
 }

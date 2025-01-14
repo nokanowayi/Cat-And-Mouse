@@ -7,20 +7,19 @@ public class Enemy1 : Enemy
 {
     public Rigidbody2D rb;
     public Animator anim;
-    public float moveSpeed = 1f;
     public Vector2 direction;
     private Vector3 _targetPosition;//目标位置
     public Spawner spawner;
 
-
     private float attackTimer = 0f; // 攻击计时器
-    private Towel nearestTower; // 最近的防御塔
+    //private Towel nearestTower; // 最近的防御塔
+    private Soldiers nearestSoldiers; // 最近的士兵
+   
 
     public static Action OnEndReached = null;//敌人到达终点事件
     public static Action OnEnemyDeath = null;//敌人死亡事件
 
     public WayPoints WayPoints { get; set; }//[SerializeField] private WayPoints waypoint;
-
     public Vector3 CurrentPointPosition => WayPoints.GetWaypointPosition(_currentWaypointIndex);
 
 
@@ -47,19 +46,49 @@ public class Enemy1 : Enemy
 
     private void Update()
     {
-        Move();
-       
-        if (IsArrived())
+        
+        nearestSoldiers = FindNearestSoldiers();
+        if (nearestSoldiers != null)
         {
-            UpdateCurrentPointIndex();
+            Debug.Log("找到最近的士兵: " + nearestSoldiers.name);
+        }
+        else
+        {
+            Debug.Log("没有找到士兵");
+        }
+        attackTimer += Time.deltaTime;
+
+        if (nearestSoldiers != null)
+        {
+            float distanceToSoldier = Vector3.Distance(transform.position, nearestSoldiers.transform.position);
+
+            if (distanceToSoldier <= attackRange)
+            {
+                if (attackTimer >= attackInterval)
+                {
+                    Attack(nearestSoldiers);
+                    attackTimer = 0f;
+                }
+            }
+            else
+            {
+                MoveTowardsSoldier(nearestSoldiers);
+            }
+        }
+        else
+        {
+            Move();
+            if (IsArrived())
+            {
+                UpdateCurrentPointIndex();
+            }
         }
 
-        attackTimer += Time.deltaTime;
-        if (attackTimer >= attackInterval)
-        {
-            Attack();
-            attackTimer = 0f;
-        }
+        //if (attackTimer >= attackInterval)
+        //{
+        //    Attack();
+        //    attackTimer = 0f;
+        //}
 
     }
 
@@ -133,37 +162,92 @@ public class Enemy1 : Enemy
     /// <summary>
     /// 敌人攻击
     /// </summary>
-    public override void Attack()
+    public override void Attack(Soldiers soldiers)
     {
-        AttackNearestTower();
+        soldiers.TakeDamage(1);
     }
-    private void AttackNearestTower()
-    {
-        nearestTower = FindNearestTower();
-        if (nearestTower != null)
-        {
-            // 执行攻击逻辑，例如减少防御塔的生命值
-            //nearestTower.TakeDamage(1);
-        }
-    }
-    private Towel FindNearestTower()
-    {
-        Towel[] towers = FindObjectsOfType<Towel>();
-        Towel nearest = null;
-        float minDistance = float.MaxValue;
 
-        foreach (Towel tower in towers)
+    private Soldiers FindNearestSoldiers()
+    { 
+        Soldiers[] soldiers = FindObjectsOfType<Soldiers>();
+        float minDistance = float.MaxValue;
+        nearestSoldiers = null;
+
+        foreach (Soldiers soldier in soldiers)
         {
-            float distance = Vector3.Distance(transform.position, tower.transform.position);
+            float distance = Vector3.Distance(transform.position, soldier.transform.position);
             if (distance < minDistance)
             {
                 minDistance = distance;
-                nearest = tower;
+                nearestSoldiers = soldier;
             }
+            return nearestSoldiers;
         }
+        return null;
 
-        return nearest;
     }
+    private void MoveTowardsSoldier(Soldiers soldier)
+    {
+        Vector3 direction = (soldier.transform.position - transform.position).normalized;
+        transform.position = Vector3.MoveTowards(transform.position, soldier.transform.position, moveSpeed * Time.deltaTime);
+
+        if (direction.x < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1); // 向左翻转
+        }
+        else if (direction.x > 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1); // 向右翻转
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /// <summary>
+    /// 攻击最近的塔
+    /// </summary>
+    //private void AttackNearestTower()
+    //{
+    //    nearestTower = FindNearestTower();
+    //    if (nearestTower != null)
+    //    {
+    //        // 执行攻击逻辑，例如减少防御塔的生命值
+    //        //nearestTower.TakeDamage(1);
+    //    }
+    //}
+    //private Towel FindNearestTower()
+    //{
+    //    Towel[] towers = FindObjectsOfType<Towel>();
+    //    Towel nearest = null;
+    //    float minDistance = float.MaxValue;
+
+    //    foreach (Towel tower in towers)
+    //    {
+    //        float distance = Vector3.Distance(transform.position, tower.transform.position);
+    //        if (distance < minDistance)
+    //        {
+    //            minDistance = distance;
+    //            nearest = tower;
+    //        }
+    //    }
+
+    //    return nearest;
+    //}
 
 
 

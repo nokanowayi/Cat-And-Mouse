@@ -9,9 +9,9 @@ public class Attack : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject == father.GetComponent<Soilders>().nowEnemy)
+        if (other.gameObject == father.GetComponent<Soldiers>().nowEnemy)
         {
-            other.GetComponent<Enemy>().TakeDamage(father.GetComponent<Soilders>().damage);
+            other.GetComponent<Enemy>().TakeDamage(father.GetComponent<Soldiers>().damage);
         }
     }
 
