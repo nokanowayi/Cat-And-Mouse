@@ -9,6 +9,7 @@ public class Enemy1 : Enemy
     public Animator anim;
     public float moveSpeed = 1f;
     public Vector2 direction;
+    private Vector3 _targetPosition;//目标位置
     public Spawner spawner;
 
 
@@ -31,12 +32,23 @@ public class Enemy1 : Enemy
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         spawner = FindObjectOfType<Spawner>(); // 在场景中查找 Spawner 组件
+        if (WayPoints != null && WayPoints.Points.Length > 0)
+        {
+            _targetPosition = WayPoints.GetWaypointPosition(_currentWaypointIndex);
+            //Debug.Log("初始目标位置: " + _targetPosition);
+        }
+        else
+        {
+            Debug.LogError("WayPoints 未正确设置或路径点为空");
+        }
+
     }
 
 
     private void Update()
     {
         Move();
+       
         if (IsArrived())
         {
             UpdateCurrentPointIndex();
@@ -57,8 +69,18 @@ public class Enemy1 : Enemy
     /// </summary>
     public override void Move()
     {
+        //if (WayPoints == null || WayPoints.Points.Length == 0) return;
+        Vector3 direction = (_targetPosition - transform.position).normalized;//敌人移动方向
+        transform.position = Vector3.MoveTowards(transform.position, _targetPosition, moveSpeed * Time.deltaTime);//敌人移动
 
-        transform.position = Vector3.MoveTowards(transform.position, CurrentPointPosition, moveSpeed * Time.deltaTime);
+        if (direction.x < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1); // 向左翻转
+        }
+        else if (direction.x > 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1); // 向右翻转
+        }
 
 
     }
@@ -79,6 +101,8 @@ public class Enemy1 : Enemy
         if (_currentWaypointIndex < lastIndex)
         {
             _currentWaypointIndex++;
+            _targetPosition = WayPoints.GetWaypointPosition(_currentWaypointIndex);
+            //Debug.Log("更新目标位置: " + _targetPosition);
         }
         else
         {
@@ -97,6 +121,10 @@ public class Enemy1 : Enemy
     public void ResetEnemy()
     {
         _currentWaypointIndex = 0;
+        if (WayPoints != null && WayPoints.Points.Length > 0)
+        {
+            _targetPosition = WayPoints.GetWaypointPosition(_currentWaypointIndex);
+        }
     }
 
 
