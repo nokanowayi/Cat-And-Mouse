@@ -7,6 +7,7 @@ public class ObjectPooler : MonoBehaviour
     [SerializeField] private GameObject prefab;//对象池中的对象
     [SerializeField] private int poolSize;
     public int AllenemyCount;//总敌人数量
+    
 
     private List<GameObject> _pool;
     private GameObject _poolContainer;//对象池容器(方便管理刷新不同种类敌人)
