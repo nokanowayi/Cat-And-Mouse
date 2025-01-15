@@ -41,6 +41,7 @@ public class Towel3 : Towel
     public void ReleasePool(GameObject obj)
     {
         obj.SetActive(false);   
+        summonCounter--;
     }
 
     public GameObject CreateFunc()
@@ -77,7 +78,7 @@ public class Towel3 : Towel
 
     public void GetISNeedSummon()
     {
-        if (summonCounter<4)
+        if (summonCounter<soilders.Count)
         {
             isNeedSummon = true;
         }

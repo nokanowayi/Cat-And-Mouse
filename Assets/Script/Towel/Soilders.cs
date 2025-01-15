@@ -35,7 +35,7 @@ public class Soilders : MonoBehaviour
                 if (CountDistance(nowEnemy.transform)>chaseRange)
                 {
                     nowEnemy = null;
-                    minEnemyDistance = attackRange + 1;
+                    minEnemyDistance = chaseRange + 1;
                 }
 
                 if (nowEnemy != null && chaseRange > CountDistance(nowEnemy.transform)&CountDistance(nowEnemy.transform)>attackRange)

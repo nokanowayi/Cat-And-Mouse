@@ -104,4 +104,52 @@ public class CardSlots : MonoBehaviour
        }
        OnCardSlotsClick(2);
    }
+   public void Card4()
+   {
+       if (towelReady[3] != null&&towelReady[3].GetComponent<Towel>().towelData.costNeeded<=CostManeger.instance.costSO.number)
+       {
+           isCostEnough = true;
+           CardManager.instance.cardPrefab = towelReady[3];
+           cards[3].GetComponent<Image>().sprite = towelReady[3].GetComponent<SpriteRenderer>().sprite;
+           cardsCost[3].text = towelReady[3].GetComponent<Towel>().towelData.costNeeded.ToString(); 
+           towelReady[3] = null;
+       }
+       else
+       {
+           isCostEnough = false;
+       }
+       OnCardSlotsClick(3);
+   } 
+   public void Card5()
+   {
+       if (towelReady[4] != null&&towelReady[4].GetComponent<Towel>().towelData.costNeeded<=CostManeger.instance.costSO.number)
+       {
+           isCostEnough = true;
+           CardManager.instance.cardPrefab = towelReady[4];
+           cards[4].GetComponent<Image>().sprite = towelReady[4].GetComponent<SpriteRenderer>().sprite;
+           cardsCost[4].text = towelReady[4].GetComponent<Towel>().towelData.costNeeded.ToString(); 
+           towelReady[4] = null;
+       }
+       else
+       {
+           isCostEnough = false;
+       }
+       OnCardSlotsClick(4);
+   } 
+   public void Card6()
+   {
+       if (towelReady[5] != null&&towelReady[5].GetComponent<Towel>().towelData.costNeeded<=CostManeger.instance.costSO.number)
+       {
+           isCostEnough = true;
+           CardManager.instance.cardPrefab = towelReady[5];
+           cards[5].GetComponent<Image>().sprite = towelReady[5].GetComponent<SpriteRenderer>().sprite;
+           cardsCost[5].text = towelReady[5].GetComponent<Towel>().towelData.costNeeded.ToString(); 
+           towelReady[5] = null;
+       }
+       else
+       {
+           isCostEnough = false;
+       }
+       OnCardSlotsClick(5);
+   } 
 }
