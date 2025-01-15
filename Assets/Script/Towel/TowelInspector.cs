@@ -17,6 +17,7 @@ public class TowelInspector : MonoBehaviour
      public TMP_Text maxHealthText;
      public TMP_Text currentHealthText;
      public TMP_Text nameText;
+     public Canvas canvas;
 
      [Header("数据")] 
      public bool isLevelUp = false;
@@ -39,6 +40,8 @@ public class TowelInspector : MonoBehaviour
           UpdateData();
           CameraController.instance.TurnCameraSize(2);
           CameraController.instance.TurnCameraPositon(towel.position);
+          Time.timeScale = 0;
+          canvas.gameObject.SetActive(false);
      }
 
      public void GetIfLevelUp()
@@ -53,6 +56,8 @@ public class TowelInspector : MonoBehaviour
           CameraController.instance.TurnCameraSize(5);
           CameraController.instance.TurnBackCameraPositon();
           isInspector.isDone = false;
+          Time.timeScale = 1;
+          canvas.gameObject.SetActive(true);
      }
      
      public void UpdateData()

@@ -68,7 +68,7 @@ public class Towel1 : Towel
                     minEnemyDistance = attackRange + 1;
                 }
 
-                if (attackRange > CountDistance(nowEnemy.transform))
+                if (nowEnemy != null && attackRange > CountDistance(nowEnemy.transform))
                 {
                     if (!isAttacking)
                     {

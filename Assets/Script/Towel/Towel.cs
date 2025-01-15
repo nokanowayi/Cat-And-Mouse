@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Towel : MonoBehaviour
 {
+    public int ID;
     public int level;
     public float currentHealth;
     public BoolSO isInspector;

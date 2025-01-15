@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de670a0486a246344944b4d7516ddefe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 3
   level: 0
   currentHealth: 0
   isInspector: {fileID: 11400000, guid: eb424b359dda91f449eaa614ceae9f8c, type: 2}

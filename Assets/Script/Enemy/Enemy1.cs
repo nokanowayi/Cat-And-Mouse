@@ -54,7 +54,7 @@ public class Enemy1 : Enemy
         }
         else
         {
-            Debug.Log("没有找到士兵");
+            //Debug.Log("没有找到士兵");
         }
         attackTimer += Time.deltaTime;
 

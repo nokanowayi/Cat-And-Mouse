@@ -265,6 +265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e5c68669328c440b84e3473544ad81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 4
   level: 0
   currentHealth: 0
   isInspector: {fileID: 11400000, guid: eb424b359dda91f449eaa614ceae9f8c, type: 2}

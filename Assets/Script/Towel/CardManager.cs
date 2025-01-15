@@ -10,6 +10,8 @@ public class CardManager : MonoBehaviour
     public GameObject nowCard;
     public List<GameObject> cards = new List<GameObject>();
     public List<GameObject> allCards = new List<GameObject>();
+    public bool isGoPlant;
+    public CardSlots cardSlots;
     
     public static CardManager instance;
 
@@ -22,14 +24,30 @@ public class CardManager : MonoBehaviour
     {
         if (isPlant.isDone)
         {
+            
             if (Input.GetMouseButtonDown(0))
             {
-                PlantCard();
-                isPlant.isDone = false;
+                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+                if (hit.collider != null && hit.collider.gameObject == gameObject) // 检测是否点击到当前物体
+                {
+                    isGoPlant = false;
+                }
+                else
+                {
+                    isGoPlant = true;
+                }
+
+                if (isGoPlant == true)
+                {
+                    PlantCard();
+                    isPlant.isDone = false; 
+                    cardSlots.RandomUpdateOneCard(cardSlots.currentNumber);
+                }
+
             }
         }
     }
-
+ 
     //放置
     public void PlantCard()
     {
@@ -42,5 +60,10 @@ public class CardManager : MonoBehaviour
             allCards.Add(nowCard);
         }
         cardPrefab = null;
+    }
+
+    public void DontPlantCard()
+    {
+        isPlant.isDone = false;
     }
 }
