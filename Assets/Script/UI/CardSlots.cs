@@ -9,8 +9,8 @@ using Random = System.Random;
 using UnityEngine.EventSystems;
 
 public class CardSlots : MonoBehaviour
-{  
-   public BoolSO isClick;
+{ 
+    public BoolSO isClick;
    public bool isCostEnough;
    public int lastIDNumber;
    public int nowIDNumber;
@@ -35,15 +35,15 @@ public class CardSlots : MonoBehaviour
    {
        lastIDNumber = nowIDNumber;
        nowIDNumber = -1;
-       if (!isClick.isDone&& isCostEnough )
+       if (!isClick.isDone&& isCostEnough)
        {
            Debug.Log("plant");
            isClick.isDone = true; 
            isCostEnough = false;
        }
-
        else
        {
+           Debug.Log("cost");
            isClick.isDone = false;
            isCostEnough = false;
        } 
@@ -97,107 +97,58 @@ public class CardSlots : MonoBehaviour
            lastNumber = -2;
        }
    }
-   
-   public void Card1()
+
+   public void AfterClick(int number)
    {
-       if (cards[0] != null&&towels[0].GetComponent<Towel>().towelData.costNeeded<=CostManeger.instance.costSO.number&&currentNumber!=0)
+       if (cards[number] != null&&towels[number].GetComponent<Towel>().towelData.costNeeded<=CostManeger.instance.costSO.number&&currentNumber!=number)
        {
-           currentNumber = 0;
-           nowIDNumber = towelReady[0].GetComponent<Towel>().ID;
+           currentNumber = number;
+           nowIDNumber = towelReady[number].GetComponent<Towel>().ID;
            isCostEnough = true;
-           CardManager.instance.cardPrefab = towelReady[0]; 
-           cards[0].GetComponent<Image>().sprite = towelReady[0].GetComponent<SpriteRenderer>().sprite;
-           cardsCost[0].text = towelReady[0].GetComponent<Towel>().towelData.costNeeded.ToString();
-           towelReady[0] = null;
-           GetIsStarUp(0,lastIDNumber);
+           CardManager.instance.cardPrefab = towelReady[number]; 
+           cards[number].GetComponent<Image>().sprite = towelReady[number].GetComponent<SpriteRenderer>().sprite;
+           cardsCost[number].text = towelReady[number].GetComponent<Towel>().towelData.costNeeded.ToString();
+           GetIsStarUp(number,lastIDNumber);
            lastNumber = currentNumber;
+           Debug.Log("oh");
        }
        else
        {
+           Debug.Log("no");
            isCostEnough = false;
+           nowIDNumber = -1;
+           lastIDNumber = -2;
+           currentNumber = -1;
+           lastNumber = -2; 
        }
+
+   }
+
+   public void Card1()
+   {
+       AfterClick(0);
        OnCardSlotsClick();
    }
 
    public void Card2()
    {
-       if (towelReady[1] != null&&towelReady[1].GetComponent<Towel>().towelData.costNeeded<=CostManeger.instance.costSO.number&&currentNumber!=1)
-       {
-           currentNumber = 1;
-           isCostEnough = true;
-           nowIDNumber = towelReady[1].GetComponent<Towel>().ID;
-           CardManager.instance.cardPrefab = towelReady[1]; 
-           cards[1].GetComponent<Image>().sprite = towelReady[1].GetComponent<SpriteRenderer>().sprite;
-           cardsCost[1].text = towelReady[1].GetComponent<Towel>().towelData.costNeeded.ToString(); 
-           towelReady[1] = null;
-           GetIsStarUp(1,lastIDNumber); 
-           lastNumber = currentNumber;
-       }
-       else
-       {
-           isCostEnough = false;
-       }
+       AfterClick(1); 
        OnCardSlotsClick();
    }
 
    public void Card3()
    {
-       if (towelReady[2] != null&&towelReady[2].GetComponent<Towel>().towelData.costNeeded<=CostManeger.instance.costSO.number&&currentNumber!=2)
-       {
-           currentNumber = 2;
-           isCostEnough = true;
-           nowIDNumber = towelReady[2].GetComponent<Towel>().ID;
-           CardManager.instance.cardPrefab = towelReady[2];
-           cards[2].GetComponent<Image>().sprite = towelReady[2].GetComponent<SpriteRenderer>().sprite;
-           cardsCost[2].text = towelReady[2].GetComponent<Towel>().towelData.costNeeded.ToString();
-           towelReady[2] = null;
-           GetIsStarUp(2,lastIDNumber); 
-           lastNumber = currentNumber;
-       }
-       else
-       {
-           isCostEnough = false;
-       }
+       AfterClick(2);
        OnCardSlotsClick();
    }
    public void Card4()
    {
-       if (towelReady[3] != null&&towelReady[3].GetComponent<Towel>().towelData.costNeeded<=CostManeger.instance.costSO.number&&currentNumber!=3)
-       {
-           currentNumber = 3;
-           isCostEnough = true;
-           nowIDNumber = towelReady[3].GetComponent<Towel>().ID;
-           CardManager.instance.cardPrefab = towelReady[3];
-           cards[3].GetComponent<Image>().sprite = towelReady[3].GetComponent<SpriteRenderer>().sprite;
-           cardsCost[3].text = towelReady[3].GetComponent<Towel>().towelData.costNeeded.ToString(); 
-           towelReady[3] = null;
-           GetIsStarUp(3,lastIDNumber); 
-           lastNumber = currentNumber;
-       }
-       else
-       {
-           isCostEnough = false;
-       }
+       AfterClick(3);
        OnCardSlotsClick();
    } 
    public void Card5()
    {
-       if (towelReady[4] != null&&towelReady[4].GetComponent<Towel>().towelData.costNeeded<=CostManeger.instance.costSO.number&&currentNumber!=4)
-       {
-           currentNumber = 4;
-           isCostEnough = true;
-           nowIDNumber = towelReady[4].GetComponent<Towel>().ID;
-           CardManager.instance.cardPrefab = towelReady[4];
-           cards[4].GetComponent<Image>().sprite = towelReady[4].GetComponent<SpriteRenderer>().sprite;
-           cardsCost[4].text = towelReady[4].GetComponent<Towel>().towelData.costNeeded.ToString(); 
-           towelReady[4] = null;
-           GetIsStarUp(4,lastIDNumber); 
-           lastNumber = currentNumber;
-       }
-       else
-       {
-           isCostEnough = false;
-       }
+       AfterClick(4); 
        OnCardSlotsClick();
    } 
    public void Card6()
@@ -210,7 +161,6 @@ public class CardSlots : MonoBehaviour
            CardManager.instance.cardPrefab = towelReady[5];
            cards[5].GetComponent<Image>().sprite = towelReady[5].GetComponent<SpriteRenderer>().sprite;
            cardsCost[5].text = towelReady[5].GetComponent<Towel>().towelData.costNeeded.ToString();
-           towelReady[5] = null;
            GetIsStarUp(5,lastIDNumber); 
            lastNumber = currentNumber;
        }

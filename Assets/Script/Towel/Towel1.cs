@@ -117,7 +117,7 @@ public class Towel1 : Towel
             Vector3 mousePosition = Input.mousePosition;
             mousePosition.z = 10.0f;
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-            Debug.Log("World Position: " + worldPosition);
+            //Debug.Log("World Position: " + worldPosition);
         }
     }
 
