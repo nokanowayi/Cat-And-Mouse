@@ -176,7 +176,7 @@ public class Enemy1 : Enemy
         foreach (Soldiers soldier in soldiers)
         {
             float distance = Vector3.Distance(transform.position, soldier.transform.position);
-            if (distance < minDistance)
+            if (distance < minDistance && distance<=searchRange)
             {
                 minDistance = distance;
                 nearestSoldiers = soldier;
