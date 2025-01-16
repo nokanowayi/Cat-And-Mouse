@@ -11,7 +11,7 @@ public class Towel3 : Towel
     public bool isNeedSummon;
     public int summonCounter;
     public ObjectPool<GameObject> soilderPool;
-    public List<GameObject> soilders;
+    public List<GameObject> soilders = new List<GameObject>();
     public GameObject soilder;
 
     private void Awake()
@@ -35,12 +35,15 @@ public class Towel3 : Towel
     public void GetPool(GameObject obj)
     {
         obj.SetActive(true);
-        obj.transform.position = new Vector3(transform.position.x, transform.position.y-1, transform.position.z);
+        obj.GetComponent<Soldiers>().father = this.gameObject;
+        soilders.Add(obj);
+        obj.transform.position = new Vector3(transform.position.x-(float)1+(float)soilders.Count/2, transform.position.y-(float)1.5, transform.position.z);
     }
 
     public void ReleasePool(GameObject obj)
     {
         obj.SetActive(false);   
+        soilders.Remove(obj);
         summonCounter--;
     }
 
@@ -54,12 +57,20 @@ public class Towel3 : Towel
     {
         GetISNeedSummon();
        WaitTimeCounter(); 
+       if (Input.GetMouseButtonDown(0)) // 检测鼠标左键是否按下
+       {
+           RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+           if (hit.collider != null && hit.collider.gameObject == gameObject) // 检测是否点击到当前物体
+           {
+               OnTowelClick();
+           }
+       } 
     }
 
     public override void OnTowelClick()
     {
         isInspector.isDone = true;
-        TowelInspector.instance.OnTowelClick(towelData,level,currentHealth);
+        TowelInspector.instance.OnTowelClick(towelData,level,currentHealth,this.gameObject);
     }
     public void WaitTimeCounter()
     {
@@ -67,8 +78,7 @@ public class Towel3 : Towel
         if (waitTimeCounter>summonTime&isNeedSummon)
         {
             waitTimeCounter = 0;
-            Attack();
-            summonCounter++;
+            Attack(); ;
         }
     }
     public override void Attack()
@@ -78,7 +88,7 @@ public class Towel3 : Towel
 
     public void GetISNeedSummon()
     {
-        if (summonCounter<soilders.Count)
+        if (summonCounter>soilders.Count)
         {
             isNeedSummon = true;
         }

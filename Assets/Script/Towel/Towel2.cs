@@ -38,7 +38,7 @@ public class Towel2 : Towel
     public override void OnTowelClick()
     {
         isIspector.isDone = true;
-        TowelInspector.instance.OnTowelClick(towelData,level,currentHealth);
+        TowelInspector.instance.OnTowelClick(towelData,level,currentHealth,this.gameObject);
     }
 
     public override void Attack()

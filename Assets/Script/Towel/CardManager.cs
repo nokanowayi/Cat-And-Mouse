@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CardManager : MonoBehaviour
 {
+    public NumberSO nowCount;
     public BoolSO isPlant;
     public GameObject cardPrefab;
     public GameObject nowCard;
@@ -46,6 +47,7 @@ public class CardManager : MonoBehaviour
 
             }
         }
+        nowCount.number = allCards.Count; 
     }
  
     //放置

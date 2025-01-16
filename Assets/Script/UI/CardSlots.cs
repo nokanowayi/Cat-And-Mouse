@@ -9,9 +9,11 @@ using Random = System.Random;
 using UnityEngine.EventSystems;
 
 public class CardSlots : MonoBehaviour
-{ 
+{
+    public NumberSO nowCount;
     public BoolSO isClick;
    public bool isCostEnough;
+   public int maxTowelCount;
    public int lastIDNumber;
    public int nowIDNumber;
    public int randomNumber;
@@ -28,6 +30,7 @@ public class CardSlots : MonoBehaviour
    private void Awake()
    {
       UpdateCards(); 
+      nowCount.number = 0;
    }
 
    
@@ -43,7 +46,7 @@ public class CardSlots : MonoBehaviour
        }
        else
        {
-           Debug.Log("cost");
+           Debug.Log(isClick.isDone);
            isClick.isDone = false;
            isCostEnough = false;
        } 
@@ -98,9 +101,18 @@ public class CardSlots : MonoBehaviour
        }
    }
 
+   public void GetIsMax()
+   {
+       if (nowCount.number>maxTowelCount)
+       {
+           OnClick.Invoke();
+           isCostEnough = false;
+       }
+   }
+
    public void AfterClick(int number)
    {
-       if (cards[number] != null&&towels[number].GetComponent<Towel>().towelData.costNeeded<=CostManeger.instance.costSO.number&&currentNumber!=number)
+       if (cards[number] != null&towels[number].GetComponent<Towel>().towelData.costNeeded<=CostManeger.instance.costSO.number&currentNumber!=number)
        {
            currentNumber = number;
            nowIDNumber = towelReady[number].GetComponent<Towel>().ID;
@@ -109,6 +121,7 @@ public class CardSlots : MonoBehaviour
            cards[number].GetComponent<Image>().sprite = towelReady[number].GetComponent<SpriteRenderer>().sprite;
            cardsCost[number].text = towelReady[number].GetComponent<Towel>().towelData.costNeeded.ToString();
            GetIsStarUp(number,lastIDNumber);
+           GetIsMax();
            lastNumber = currentNumber;
            Debug.Log("oh");
        }
@@ -121,7 +134,6 @@ public class CardSlots : MonoBehaviour
            currentNumber = -1;
            lastNumber = -2; 
        }
-
    }
 
    public void Card1()

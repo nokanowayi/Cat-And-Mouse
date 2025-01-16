@@ -102,7 +102,9 @@ GameObject:
   - component: {fileID: 5391710285840849153}
   - component: {fileID: 8921809121079121614}
   - component: {fileID: 7231988757042280430}
+  - component: {fileID: 8568886279760655244}
   - component: {fileID: 2569822404287093257}
+  - component: {fileID: 2685921142683662752}
   m_Layer: 0
   m_Name: DefendJerry
   m_TagString: Untagged
@@ -190,15 +192,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eb1be3bad01d934e90695f288dbd2a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soldierAnimation: {fileID: 8568886279760655244}
+  isMove: 0
   chaseRange: 4
   attackRange: 1
   maxHealth: 30
   curentHealth: 0
-  damage: 0.25
+  damage: 0.1
   speed: 2
   direction: {x: 0, y: 0, z: 0}
+  father: {fileID: 0}
   enemies: []
   nowEnemy: {fileID: 0}
+--- !u!114 &8568886279760655244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6963846778809724337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac881e452f2207441bd613e74447ad0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isWalk: 0
 --- !u!50 &2569822404287093257
 Rigidbody2D:
   serializedVersion: 4
@@ -226,3 +244,24 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &2685921142683662752
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6963846778809724337}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: be715518549af6242b332fb9a2599d07, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

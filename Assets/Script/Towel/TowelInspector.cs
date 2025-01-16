@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
+
 public class TowelInspector : MonoBehaviour
 {
      public static TowelInspector instance;
@@ -11,12 +13,10 @@ public class TowelInspector : MonoBehaviour
      public BoolSO isInspector;
      [Header("观察面板")]
      public GameObject TowelPanel;
-     public TMP_Text levelText;
+     public GameObject Image;
      public TMP_Text damegeText;
-     public TMP_Text attackIntervalText;
      public TMP_Text maxHealthText;
      public TMP_Text currentHealthText;
-     public TMP_Text nameText;
      public Canvas canvas;
 
      [Header("数据")] 
@@ -25,13 +25,14 @@ public class TowelInspector : MonoBehaviour
      public int level;
      public float currenthealth;
      public NumberSO Cost;
+     public GameObject nowGameObject;
 
      private void Awake()
      {
          instance = this; 
      }
      
-     public void OnTowelClick(TowelSO towel, int level, float currenthealth)
+     public void OnTowelClick(TowelSO towel, int level, float currenthealth,GameObject target)
      {
           this.level = level;
           this.currenthealth = currenthealth;
@@ -39,9 +40,10 @@ public class TowelInspector : MonoBehaviour
           TowelPanel.SetActive(true);
           UpdateData();
           CameraController.instance.TurnCameraSize(2);
-          CameraController.instance.TurnCameraPositon(towel.position);
+          CameraController.instance.TurnCameraPositon(target.transform.position);
           Time.timeScale = 0;
           canvas.gameObject.SetActive(false);
+          nowGameObject = target;
      }
 
      public void GetIfLevelUp()
@@ -58,17 +60,20 @@ public class TowelInspector : MonoBehaviour
           isInspector.isDone = false;
           Time.timeScale = 1;
           canvas.gameObject.SetActive(true);
+          nowGameObject = null;
      }
-     
+
+     public void OnDelete()
+     { 
+          CardManager.instance.allCards.Remove(nowGameObject);
+          Destroy(nowGameObject);
+          OnExitClick();
+     }
      public void UpdateData()
      {
-          levelText.text = "Level:"+level.ToString();
-          damegeText.text = "Damage:"+towelData.damage.ToString();
-          attackIntervalText.text = "Attack Interval:"+towelData.attackInterval.ToString();
-          maxHealthText.text = "Max Health:"+towelData.maxHealth.ToString();
-          currentHealthText.text = "CurrentHealth:"+currenthealth.ToString();
-          nameText.text = towelData.towelName;
+          damegeText.text = towelData.damage.ToString();
+          maxHealthText.text = towelData.maxHealth.ToString();
+          currentHealthText.text = currenthealth.ToString();
+          Image.GetComponent<Image>().sprite = towelData.panelSprite;
      }
-     
-
 }

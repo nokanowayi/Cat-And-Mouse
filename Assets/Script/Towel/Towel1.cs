@@ -111,14 +111,6 @@ public class Towel1 : Towel
                 OnTowelClick();
             }
         }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector3 mousePosition = Input.mousePosition;
-            mousePosition.z = 10.0f;
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-            //Debug.Log("World Position: " + worldPosition);
-        }
     }
 
     public override void LevelUp()
@@ -152,7 +144,7 @@ public class Towel1 : Towel
     public override void OnTowelClick()
     {
         isInspector.isDone = true;
-        TowelInspector.instance.OnTowelClick(towelData,level,currentHealth);
+        TowelInspector.instance.OnTowelClick(towelData,level,currentHealth,this.gameObject);
     }
 
     public override void Attack()

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Money2
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: a2e9f79e24c51a24c89ce2db28908218, type: 3}
+  panelSprite: {fileID: 21300000, guid: b4e0acbfa8180854288c70d9ce0b37d5, type: 3}
   towelName: Towel3
   damage: 0
   maxHealth: 30
@@ -21,4 +22,4 @@ MonoBehaviour:
   bulletDisposeTime: 0
   attackRange: 0
   position: {x: 0.34908298, y: 0.28914034}
-  costNeeded: 10
+  costNeeded: 15

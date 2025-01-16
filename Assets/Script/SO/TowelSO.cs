@@ -5,6 +5,7 @@ using UnityEngine;
 public class TowelSO : ScriptableObject
 {
     public Sprite sprite;
+    public Sprite panelSprite;
     public string towelName;
     public int damage;
     public float maxHealth;

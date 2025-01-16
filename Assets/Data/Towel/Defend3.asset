@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Defend3
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 01b9ed4e52c13a546ad46358bd67a3be, type: 3}
+  panelSprite: {fileID: 21300000, guid: ef82d684789bf514fb8518476528df83, type: 3}
   towelName: Towel4
   damage: 10
   maxHealth: 20
@@ -21,4 +22,4 @@ MonoBehaviour:
   bulletDisposeTime: 0
   attackRange: 0
   position: {x: 0, y: 0}
-  costNeeded: 25
+  costNeeded: 30
