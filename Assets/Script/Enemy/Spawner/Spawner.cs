@@ -40,28 +40,30 @@ public class Spawner : MonoBehaviour
     [SerializeField] private ObjectPooler enemyWave3;
     public int _currentWave = 0;
     //public int delayBtwAllWaves = 1; //所有波次间隔
-    public int CurrentWaveLeavedEnemies;
+    public int CurrentWaveLeavedEnemies;//当前波次剩余敌人数量
 
     private float _spawnTimer; //出怪计时器
     private int _spawnedEnemyCount; //已经出怪数量
     public int _enemiesRemaining; //剩余敌人数量
-    
+    [Header("游戏设置")]
+    [SerializeField] private int maxEnemies = 50; // 最大敌人数量
+
     private WayPoints _waypoints;
 
 
 
     private ObjectPooler GetPooler()
     {
-        if (_currentWave <= 1)
+        if (_currentWave ==0)
         {
             return enemyWave1;
         }
-        else if (_currentWave == 2)
+        else if (_currentWave == 1)
         {
             
             return enemyWave2;
         }
-        else if (_currentWave >= 3)
+        else if (_currentWave >= 2)
         {
             
             return enemyWave3;
@@ -101,20 +103,27 @@ public class Spawner : MonoBehaviour
     void Update()
     {
         _spawnTimer -= Time.deltaTime;
-        if (_spawnTimer < 0)
+        if (_spawnTimer < 0)  
         {
             _spawnTimer = GetSpawnDelay();
             if (_spawnedEnemyCount < waveConfigs[_currentWave].enemyCount)
             {
                 SpawnEnemy();
                 _spawnedEnemyCount++;
+                CheckEnemyCount();
             }
         }
         
 
     }
 
-    
+    private void CheckEnemyCount()
+    {
+        if (maxEnemies==0)
+        {
+            Time.timeScale = 0;
+        }
+    }
 
     //出怪
     private void SpawnEnemy()
@@ -164,17 +173,23 @@ public class Spawner : MonoBehaviour
         if (CurrentWaveLeavedEnemies == 0)
         {
             _currentWave++;
-            CurrentWaveLeavedEnemies = GetWave().AllenemyCount;
+            if (_currentWave < waveConfigs.Length)
+            {
+                CurrentWaveLeavedEnemies = GetWave().AllenemyCount;
+                _enemiesRemaining = waveConfigs[_currentWave].enemyCount;
+                _spawnedEnemyCount = 0;
+                _spawnTimer = 0f;
+
+            }
 
         }
-        _enemiesRemaining = waveConfigs[_currentWave].enemyCount;
-        _spawnedEnemyCount = 0;
-        _spawnTimer = 0f;
+        
     }
     private void RecordEnemyEndReached()
     {
         _enemiesRemaining--;
         CurrentWaveLeavedEnemies--;
+        maxEnemies--;
         if (_enemiesRemaining <= 0)
         {
             StartCoroutine(NextWave());
