@@ -10,7 +10,8 @@ public class Enemy1 : Enemy
     public Vector2 direction;
     private Vector3 _targetPosition;//目标位置
     public Spawner spawner;
-
+    public bool isAttacking;//让老鼠识别该猫是否已经被其他老鼠选择
+    
     private float attackTimer = 0f; // 攻击计时器
     //private Towel nearestTower; // 最近的防御塔
     private Soldiers nearestSoldiers; // 最近的士兵
@@ -284,6 +285,7 @@ public class Enemy1 : Enemy
     public override void Death()
     {
         anim.SetTrigger("Death");
+        isAttacking = false;
         OnEnemyDeath?.Invoke();
         currentHealth = intialHealth;
         _currentWaypointIndex = 0;

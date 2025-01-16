@@ -9,7 +9,6 @@ public class Soldiers : MonoBehaviour
 {
     public ObjectPool<GameObject> soilPool;
     public SoldierAnimation soldierAnimation;
-    public bool isMove;
     private float oneEnemyDistance;
     private float minEnemyDistance;
     public float chaseRange;
@@ -50,10 +49,12 @@ public class Soldiers : MonoBehaviour
         } 
         if (nowEnemy != null)
         {
+            //nowEnemy.GetComponent<Enemy1>().isAttacking = true;
             if (nowEnemy.activeSelf)
             {
                 if (CountDistance(nowEnemy.transform)>chaseRange)
                 {
+                    //nowEnemy.GetComponent<Enemy1>().isAttacking = false;
                     nowEnemy = null;
                     minEnemyDistance = chaseRange + 1;
                     Debug.Log("go");
@@ -89,7 +90,7 @@ public class Soldiers : MonoBehaviour
             }
             else
             {
-                Debug.Log("shit");
+                //nowEnemy.GetComponent<Enemy1>().isAttacking = false;
                 nowEnemy = null;
                 minEnemyDistance = chaseRange + 1;
             }   
@@ -100,14 +101,15 @@ public class Soldiers : MonoBehaviour
             for (int i = 0; i < father.GetComponent<Towel3>().soilders.Count; i++)
             {
                 GameObject j = father.GetComponent<Towel3>().soilders[i];
-                if (j == this)
+                if (j == this.gameObject)
                 {
                     fatherPos.x = fatherPos.x - (float)1 + (float)i/2;
                 }
             }
 
-            if (Mathf.Abs(fatherPos.x)<0.1&&Mathf.Abs(fatherPos.y)<0.1)
+            if (Mathf.Abs(fatherPos.x-this.gameObject.transform.position.x)>0.001&&Mathf.Abs(fatherPos.y-this.gameObject.transform.position.y)>0.001)
             {
+                Debug.Log("budao");
                 Move(fatherPos);
                 soldierAnimation.isWalk = true;
             }
@@ -125,7 +127,7 @@ public class Soldiers : MonoBehaviour
         float realRange = 0;
         rangeX = this.gameObject.transform.position.x-nowEnemyTransform.position.x;
         rangeY = this.gameObject.transform.position.y-nowEnemyTransform.position.y;
-        Debug.Log(rangeX+","+rangeY);
+        //Debug.Log(rangeX+","+rangeY);
         realRange = Mathf.Sqrt( rangeX * rangeX+rangeY * rangeY);
         return realRange;
     }
@@ -145,6 +147,7 @@ public class Soldiers : MonoBehaviour
     
     public void Death()
     {
+        //nowEnemy.GetComponent<Enemy1>().isAttacking = false;
         soilPool.Release(gameObject);
     }
     
