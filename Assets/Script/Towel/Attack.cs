@@ -7,7 +7,7 @@ public class Attack : MonoBehaviour
 {
     public GameObject father;
 
-    private void OnTriggerStay2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject == father.GetComponent<Soldiers>().nowEnemy)
         {

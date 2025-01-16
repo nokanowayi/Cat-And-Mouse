@@ -32,38 +32,64 @@ public class Soldiers : MonoBehaviour
     private void Update()
     {
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (var enemy in enemies)
+        {
+            //Debug.Log(minEnemyDistance);
+            oneEnemyDistance = CountDistance(enemy.transform);
+            if (oneEnemyDistance < minEnemyDistance)
+            {
+                minEnemyDistance = oneEnemyDistance;
+                nowEnemy = enemy;
+                Debug.Log(nowEnemy.name);
+            }
+            if (!enemy.activeSelf)
+            {
+                GameObject[] newEnmeies = enemies.Where(x => x != nowEnemy).ToArray();
+                enemies = newEnmeies;
+            }
+        } 
         if (nowEnemy != null)
         {
             if (nowEnemy.activeSelf)
             {
-                if (CountDistance(nowEnemy.transform.position)>chaseRange)
+                if (CountDistance(nowEnemy.transform)>chaseRange)
                 {
                     nowEnemy = null;
                     minEnemyDistance = chaseRange + 1;
+                    Debug.Log("go");
                 }
-
-                if (nowEnemy != null && chaseRange > CountDistance(nowEnemy.transform.position)&CountDistance(nowEnemy.transform.position)>attackRange)
+                else if (nowEnemy != null && chaseRange > CountDistance(nowEnemy.transform)&CountDistance(nowEnemy.transform)>attackRange)
                 {
-                    Move();
+                    Debug.Log("ok");
+                    Move(nowEnemy.transform.position);
                     soldierAnimation.isWalk = true;
                     if (direction.x<0)
                     {
-                        transform.localScale = new Vector3(-1, 1, 1);
+                        transform.localScale = new Vector3(1, 1, 1);
                     }
                     else
                     {
-                        transform.localScale = new Vector3(1, 1, 1);
+                        transform.localScale = new Vector3(-1, 1, 1);
                     }
                 }
-                else
+                else 
                 {
+                    if (direction.x<0)
+                    {
+                        transform.localScale = new Vector3(1, 1, 1);
+                    }
+                    else
+                    {
+                        transform.localScale = new Vector3(-1, 1, 1);
+                    }
+                    Debug.Log("attack");
                     Attack();
-                    soldierAnimation.isWalk = false;
                 }
 
             }
             else
             {
+                Debug.Log("shit");
                 nowEnemy = null;
                 minEnemyDistance = chaseRange + 1;
             }   
@@ -82,8 +108,7 @@ public class Soldiers : MonoBehaviour
 
             if (Mathf.Abs(fatherPos.x)<0.1&&Mathf.Abs(fatherPos.y)<0.1)
             {
-                CountDistance(fatherPos);
-                Move();
+                Move(fatherPos);
                 soldierAnimation.isWalk = true;
             }
             else
@@ -91,45 +116,31 @@ public class Soldiers : MonoBehaviour
                 soldierAnimation.isWalk = false;
             }
         }
-
-        foreach (var enemy in enemies)
-        {
-            oneEnemyDistance = CountDistance(enemy.transform.position);
-            if (oneEnemyDistance < minEnemyDistance)
-            {
-                minEnemyDistance = oneEnemyDistance;
-                nowEnemy = enemy;
-            }
-            if (!enemy.activeSelf)
-            {
-                GameObject[] newEnmeies = enemies.Where(x => x != nowEnemy).ToArray();
-                enemies = newEnmeies;
-            }
-        } 
     }
     
-    public float CountDistance(Vector3 nowEnemyTransform)
+    public float CountDistance(Transform nowEnemyTransform)
     {
         float rangeX = 0;
         float rangeY = 0;
         float realRange = 0;
-        rangeX = transform.position.x-nowEnemyTransform.x;
-        rangeY = transform.position.x-nowEnemyTransform.y;
+        rangeX = this.gameObject.transform.position.x-nowEnemyTransform.position.x;
+        rangeY = this.gameObject.transform.position.y-nowEnemyTransform.position.y;
+        Debug.Log(rangeX+","+rangeY);
         realRange = Mathf.Sqrt( rangeX * rangeX+rangeY * rangeY);
-        Vector3 distance = nowEnemyTransform - transform.position; 
-        float angle = (float)(Mathf.Atan2(distance.y, distance.x) * 180/Mathf.PI);
-        direction = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle),0).normalized;
         return realRange;
     }
 
-    public void Move()
+    public void Move(Vector3 nowEnemyTransform)
     {
+        Vector3 distance = nowEnemyTransform - transform.position; 
+        float angle = (float)(Mathf.Atan2(distance.y, distance.x) * 180/Mathf.PI);
+        direction = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle),0).normalized;
         transform.position += direction * speed * Time.deltaTime; 
     }
     
     public void Attack()
     {
-        
+        soldierAnimation.SetAnimationTrigger();
     }
     
     public void Death()

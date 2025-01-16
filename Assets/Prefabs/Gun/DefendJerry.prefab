@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4565517260006331603
 Transform:
   m_ObjectHideFlags: 0
@@ -78,7 +78,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.073960185, y: 0.41777372}
+  m_Offset: {x: -0.4020486, y: 0.5056546}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -89,7 +89,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.793525, y: 0.8480563}
+  m_Size: {x: 1.5043831, y: 1.1644273}
   m_EdgeRadius: 0
 --- !u!1 &6963846778809724337
 GameObject:
@@ -121,7 +121,7 @@ Transform:
   m_GameObject: {fileID: 6963846778809724337}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.1867485, y: 1.46, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -194,11 +194,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soldierAnimation: {fileID: 8568886279760655244}
   isMove: 0
-  chaseRange: 4
+  chaseRange: 3
   attackRange: 1
   maxHealth: 30
   curentHealth: 0
-  damage: 0.1
+  damage: 10
   speed: 2
   direction: {x: 0, y: 0, z: 0}
   father: {fileID: 0}

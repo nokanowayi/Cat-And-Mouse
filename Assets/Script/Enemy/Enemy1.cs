@@ -50,7 +50,7 @@ public class Enemy1 : Enemy
         nearestSoldiers = FindNearestSoldiers();
         if (nearestSoldiers != null)
         {
-            Debug.Log("找到最近的士兵: " + nearestSoldiers.name);
+            //Debug.Log("找到最近的士兵: " + nearestSoldiers.name);
         }
         else
         {

@@ -22,4 +22,10 @@ public class SoldierAnimation : MonoBehaviour
     {
         animator.SetBool("isW",isWalk);
     }
+
+    public void SetAnimationTrigger()
+    {
+        animator.SetTrigger("hit");
+        //Debug.Log("HIT");
+    }
 }
