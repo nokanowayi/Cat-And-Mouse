@@ -4386,6 +4386,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lives: 1
   GameOverUI: {fileID: 1572294984}
+  livesText: {fileID: 0}
 --- !u!4 &1585746010
 Transform:
   m_ObjectHideFlags: 0

@@ -274,7 +274,7 @@ MonoBehaviour:
   towelType: 1
   health: 0
   waitTimeCounter: 0
-  summonTime: 5
+  summonTime: 7
   isNeedSummon: 0
   summonCounter: 3
   soilders: []

@@ -193,13 +193,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soldierAnimation: {fileID: 8568886279760655244}
-  isMove: 0
-  chaseRange: 3
+  chaseRange: 2
   attackRange: 1
-  maxHealth: 30
+  maxHealth: 50
   curentHealth: 0
-  damage: 10
-  speed: 2
+  damage: 5
+  speed: 1.5
   direction: {x: 0, y: 0, z: 0}
   father: {fileID: 0}
   enemies: []

@@ -17,9 +17,9 @@ MonoBehaviour:
   towelName: Hit1
   damage: 5
   maxHealth: 20
-  attackInterval: 1
+  attackInterval: 1.5
   speed: 7
   bulletDisposeTime: 25
   attackRange: 9
-  position: {x: -2.0980258, y: 2.0451343}
+  position: {x: -0.5747536, y: 1.0930896}
   costNeeded: 15

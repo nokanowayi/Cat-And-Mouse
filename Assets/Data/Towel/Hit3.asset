@@ -15,9 +15,9 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 8d663d8a6af321b4d80dba62ae5b2e15, type: 3}
   panelSprite: {fileID: 21300000, guid: 0e566d37c662e3646b91bb1dfa6a746a, type: 3}
   towelName: Hit3
-  damage: 20
+  damage: 10
   maxHealth: 40
-  attackInterval: 0.5
+  attackInterval: 1
   speed: 5
   bulletDisposeTime: 35
   attackRange: 15

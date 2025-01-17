@@ -274,6 +274,6 @@ MonoBehaviour:
   towelType: 2
   health: 0
   isIspector: {fileID: 11400000, guid: eb424b359dda91f449eaa614ceae9f8c, type: 2}
-  cost: 10
-  waitTime: 7
+  cost: 7
+  waitTime: 15
   waitTimeCounter: 0
