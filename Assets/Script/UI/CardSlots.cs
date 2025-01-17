@@ -20,6 +20,7 @@ public class CardSlots : MonoBehaviour
    public int lastNumber;
    public int currentNumber;
    Random random = new Random();
+   //public SpriteRenderer cardImage;
    public List<TMP_Text> cardsCost = new List<TMP_Text>();
    public List<TMP_Text> levels = new List<TMP_Text>();
    public List<GameObject> cards = new List<GameObject>();
@@ -33,7 +34,13 @@ public class CardSlots : MonoBehaviour
       nowCount.number = 0;
    }
 
-   
+   private void Update()
+   {
+       Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+       pos.z = 0;
+      //cardImage.transform.position = Camera.main.WorldToScreenPoint(pos); 
+   }
+
    public void OnCardSlotsClick()
    {
        lastIDNumber = nowIDNumber;
@@ -46,6 +53,7 @@ public class CardSlots : MonoBehaviour
        }
        else
        {
+           //cardImage.gameObject.SetActive(false);
            Debug.Log(isClick.isDone);
            isClick.isDone = false;
            isCostEnough = false;
@@ -70,6 +78,7 @@ public class CardSlots : MonoBehaviour
            cardsCost[number].text = towels[ID+3].GetComponent<Towel>().towelData.costNeeded.ToString();
            towelReady[number] = towels[ID+3];
            lastNumber = -2;
+           //cardImage.gameObject.SetActive(false);
        }
 
    }
@@ -82,6 +91,7 @@ public class CardSlots : MonoBehaviour
        cardsCost[number].text = towels[randomNumber].GetComponent<Towel>().towelData.costNeeded.ToString();
        towelReady[number] = towels[randomNumber];
        lastIDNumber = -2;
+       //cardImage.gameObject.SetActive(false);
    }
 
    public void GetIsStarUp(int number,int ID)
@@ -93,6 +103,7 @@ public class CardSlots : MonoBehaviour
            OnClick.Invoke();
            RandomUpdateOneCard(lastNumber);
            UpdateOneCard(number,ID);
+           //cardImage.gameObject.SetActive(false);
            isCostEnough = false;
            nowIDNumber = -1;
            lastIDNumber = -2;
@@ -105,6 +116,7 @@ public class CardSlots : MonoBehaviour
    {
        if (nowCount.number>maxTowelCount)
        {
+           //cardImage.gameObject.SetActive(false);
            OnClick.Invoke();
            isCostEnough = false;
        }
@@ -114,6 +126,8 @@ public class CardSlots : MonoBehaviour
    {
        if (cards[number] != null&towels[number].GetComponent<Towel>().towelData.costNeeded<=CostManeger.instance.costSO.number&currentNumber!=number)
        {
+           //cardImage.sprite = towelReady[number].GetComponent<SpriteRenderer>().sprite;
+           //cardImage.gameObject.SetActive(true);
            currentNumber = number;
            nowIDNumber = towelReady[number].GetComponent<Towel>().ID;
            isCostEnough = true;
@@ -128,6 +142,7 @@ public class CardSlots : MonoBehaviour
        else
        {
            Debug.Log("no");
+           //cardImage.gameObject.SetActive(false);
            isCostEnough = false;
            nowIDNumber = -1;
            lastIDNumber = -2;
