@@ -49,7 +49,14 @@ public class Spawner : MonoBehaviour
     [SerializeField] private int maxEnemies = 50; // 最大敌人数量
 
     private WayPoints _waypoints;
+    public GameObject WinUI;
+    public GameObject returnButton;
 
+
+    private int _enemiesRemaining1; // 剩余敌人数量（刷怪点1）
+    private int _enemiesRemaining2; // 剩余敌人数量（刷怪点2）
+    private int CurrentWaveLeavedEnemies1; // 当前波次剩余敌人数量（刷怪点1）
+    private int CurrentWaveLeavedEnemies2; // 当前波次剩余敌人数量（刷怪点2）
 
 
     private ObjectPooler GetPooler()
@@ -92,8 +99,14 @@ public class Spawner : MonoBehaviour
 
     private void Start()
     {
-        CurrentWaveLeavedEnemies = GetPooler().AllenemyCount;
-        _enemiesRemaining = waveConfigs[_currentWave].enemyCount;
+        CurrentWaveLeavedEnemies1 = GetPooler().AllenemyCount;
+        CurrentWaveLeavedEnemies2 = GetPooler().AllenemyCount;
+        CurrentWaveLeavedEnemies = CurrentWaveLeavedEnemies1 + CurrentWaveLeavedEnemies2;
+
+        _enemiesRemaining1 = waveConfigs[_currentWave].enemyCount;
+        _enemiesRemaining2 = waveConfigs[_currentWave].enemyCount;
+
+        _enemiesRemaining = _enemiesRemaining1 + _enemiesRemaining2;
         _spawnTimer = GetSpawnDelay();
         _waypoints = GetComponent<WayPoints>();
     }
@@ -122,6 +135,8 @@ public class Spawner : MonoBehaviour
         if (maxEnemies==0)
         {
             Time.timeScale = 0;
+            WinUI.SetActive(true);
+            returnButton.SetActive(true);
         }
     }
 
@@ -175,8 +190,12 @@ public class Spawner : MonoBehaviour
             _currentWave++;
             if (_currentWave < waveConfigs.Length)
             {
-                CurrentWaveLeavedEnemies = GetWave().AllenemyCount;
-                _enemiesRemaining = waveConfigs[_currentWave].enemyCount;
+                CurrentWaveLeavedEnemies1 = GetWave().AllenemyCount;
+                CurrentWaveLeavedEnemies2 = GetWave().AllenemyCount;
+                CurrentWaveLeavedEnemies = CurrentWaveLeavedEnemies1 + CurrentWaveLeavedEnemies2;
+                _enemiesRemaining1 = waveConfigs[_currentWave].enemyCount;
+                _enemiesRemaining2 = waveConfigs[_currentWave].enemyCount;
+                _enemiesRemaining = _enemiesRemaining1 + _enemiesRemaining2;
                 _spawnedEnemyCount = 0;
                 _spawnTimer = 0f;
 

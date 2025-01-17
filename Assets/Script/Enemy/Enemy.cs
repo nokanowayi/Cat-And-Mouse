@@ -13,7 +13,7 @@ public abstract class Enemy : MonoBehaviour
     public float attackRange; // 攻击范围
     public float searchRange; // 索敌范围
 
-    protected float attackInterval = 1f; // 攻击间隔时间
+    protected float attackInterval = 3f; // 攻击间隔时间
 
     public int _currentWaypointIndex;
 
