@@ -105,7 +105,6 @@ public class Spawner : MonoBehaviour
 
         _enemiesRemaining1 = waveConfigs[_currentWave].enemyCount;
         _enemiesRemaining2 = waveConfigs[_currentWave].enemyCount;
-
         _enemiesRemaining = _enemiesRemaining1 + _enemiesRemaining2;
         _spawnTimer = GetSpawnDelay();
         _waypoints = GetComponent<WayPoints>();

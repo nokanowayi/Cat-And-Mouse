@@ -120,10 +120,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f97729301d90199419174eff5d0f2c23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intialHealth: 100
+  intialHealth: 50
   currentHealth: 0
   moveSpeed: 1
-  damage: 20
+  damage: 10
   attackRange: 1
   searchRange: 2
   _currentWaypointIndex: 0
