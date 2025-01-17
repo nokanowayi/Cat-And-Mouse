@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4737371135176439692}
   - component: {fileID: 433930641981205445}
   m_Layer: 6
-  m_Name: Tom
+  m_Name: Tom 1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -120,10 +120,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f97729301d90199419174eff5d0f2c23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intialHealth: 50
+  intialHealth: 80
   currentHealth: 0
   moveSpeed: 1
-  damage: 10
+  damage: 15
   attackRange: 1
   searchRange: 2
   _currentWaypointIndex: 0
@@ -132,8 +132,6 @@ MonoBehaviour:
   direction: {x: 0, y: 0}
   spawner: {fileID: 0}
   isAttacking: 0
-  audioSource: {fileID: 0}
-  attackClip: {fileID: 8300000, guid: 798169a8025e6a04bbae6beb6d922ad9, type: 3}
 --- !u!61 &433930641981205445
 BoxCollider2D:
   m_ObjectHideFlags: 0

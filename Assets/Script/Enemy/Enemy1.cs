@@ -15,7 +15,7 @@ public class Enemy1 : Enemy
     private float attackTimer = 0f; // 攻击计时器
     //private Towel nearestTower; // 最近的防御塔
     private Soldiers nearestSoldiers; // 最近的士兵
-   
+
 
     public static Action OnEndReached = null;//敌人到达终点事件
     public static Action OnEnemyDeath = null;//敌人死亡事件
@@ -165,7 +165,9 @@ public class Enemy1 : Enemy
     /// </summary>
     public override void Attack(Soldiers soldiers)
     {
-        soldiers.TakeDamage(1);
+        soldiers.TakeDamage(damage);
+        anim.SetTrigger("Attack");
+       
     }
 
     private Soldiers FindNearestSoldiers()
